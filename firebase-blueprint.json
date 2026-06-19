@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "Post": {
+      "title": "Post",
+      "description": "Tech description and details of articles on TechFix AI",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title of the article"
+        },
+        "slug": {
+          "type": "string",
+          "description": "The URL-friendly slug representing the article"
+        },
+        "excerpt": {
+          "type": "string",
+          "description": "A short summary of the article"
+        },
+        "content": {
+          "type": "string",
+          "description": "The main content of the article (Markdown syntax recommended)"
+        },
+        "featuredImage": {
+          "type": "string",
+          "description": "The cover image URL of the article"
+        },
+        "category": {
+          "type": "string",
+          "description": "The associated category ID"
+        },
+        "tags": {
+          "type": "array",
+          "description": "List of tags associated with this article"
+        },
+        "metaTitle": {
+          "type": "string",
+          "description": "SEO meta title used in the document head"
+        },
+        "metaDescription": {
+          "type": "string",
+          "description": "SEO meta description used in the document head"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["draft", "published"],
+          "description": "The publication status of the article"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the article was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the article was last updated"
+        }
+      },
+      "required": [
+        "title",
+        "slug",
+        "excerpt",
+        "content",
+        "featuredImage",
+        "category",
+        "tags",
+        "metaTitle",
+        "metaDescription",
+        "status",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Article categories for organizing articles in TechFix AI",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the category"
+        },
+        "slug": {
+          "type": "string",
+          "description": "URL slug representing the category"
+        },
+        "description": {
+          "type": "string",
+          "description": "A brief description of this category"
+        }
+      },
+      "required": ["name", "slug"]
+    }
+  },
+  "firestore": {
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Global collection containing all written articles"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Supported categories under which articles are grouped"
+    }
+  }
+}

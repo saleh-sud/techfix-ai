@@ -1,0 +1,87 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedEmail() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isVerifiedEmail() && request.auth.token.email == "hadi681sa@gmail.com";
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Entity validations
+    function isValidPost(data) {
+      return data.title is string && data.title.size() <= 200
+        && data.slug is string && data.slug.size() <= 150 && data.slug.matches('^[a-z0-9_\\-]+$')
+        && data.excerpt is string && data.excerpt.size() <= 500
+        && data.content is string && data.content.size() <= 100000
+        && data.featuredImage is string && data.featuredImage.size() <= 1000
+        && data.category is string && data.category.size() <= 128
+        && data.tags is list && data.tags.size() <= 20
+        && data.metaTitle is string && data.metaTitle.size() <= 200
+        && data.metaDescription is string && data.metaDescription.size() <= 400
+        && data.status is string && (data.status == 'draft' || data.status == 'published');
+    }
+
+    function isValidCategory(data) {
+      return data.name is string && data.name.size() <= 100
+        && data.slug is string && data.slug.size() <= 100 && data.slug.matches('^[a-z0-9_\\-]+$')
+        && data.description is string && data.description.size() <= 400;
+    }
+
+    // Collection: posts
+    match /posts/{postId} {
+      allow read: if (resource.data.status == 'published') || isAdmin();
+      
+      allow create: if isAdmin() 
+        && isValidId(postId)
+        && isValidPost(request.resource.data)
+        && request.resource.data.keys().hasAll(['title', 'slug', 'excerpt', 'content', 'featuredImage', 'category', 'tags', 'metaTitle', 'metaDescription', 'status', 'createdAt', 'updatedAt'])
+        && request.resource.data.keys().size() == 12
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time;
+        
+      allow update: if isAdmin()
+        && isValidId(postId)
+        && isValidPost(request.resource.data)
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.createdAt == resource.data.createdAt; // Immutability of createdAt
+        
+      allow delete: if isAdmin() && isValidId(postId);
+    }
+
+    // Collection: categories
+    match /categories/{categoryId} {
+      allow read: if true; // Publicly readable for dynamic navigation and lists
+      
+      allow create: if isAdmin()
+        && isValidId(categoryId)
+        && isValidCategory(request.resource.data)
+        && request.resource.data.keys().hasAll(['name', 'slug', 'description'])
+        && request.resource.data.keys().size() == 3;
+        
+      allow update: if isAdmin()
+        && isValidId(categoryId)
+        && isValidCategory(request.resource.data)
+        && request.resource.data.keys().hasAll(['name', 'slug', 'description'])
+        && request.resource.data.keys().size() == 3;
+        
+      allow delete: if isAdmin() && isValidId(categoryId);
+    }
+  }
+}

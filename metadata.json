@@ -1,0 +1,6 @@
+{
+  "name": "TechFix AI",
+  "description": "موقع مقالات تقنية وأدوات ذكاء اصطناعي مهيأ للـ SEO وتحقيق الأرباح من الإعلانات - TechFix AI",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
