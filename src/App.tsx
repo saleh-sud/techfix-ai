@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useDatabase } from './hooks/useDatabase';
 import { auth } from './lib/firebase';
@@ -38,15 +38,15 @@ function NotFoundView({ onNavigate }: { onNavigate: (path: string) => void }) {
   return (
     <div className="py-20 text-center space-y-6 max-w-md mx-auto select-none">
       <div className="text-7xl font-black text-indigo-200 dark:text-slate-800 font-mono tracking-widest animate-pulse">404</div>
-      <h1 className="text-2xl font-black text-gray-900 dark:text-white">الصفحة غير موجودة</h1>
+      <h1 className="text-2xl font-black text-gray-900 dark:text-white">ط§ظ„طµظپط­ط© ط؛ظٹط± ظ…ظˆط¬ظˆط¯ط©</h1>
       <p className="text-xs text-gray-500 leading-relaxed">
-        عذراً! يبدو أن الرابط الذي حاولت الوصول إليه غير متوفر أو تم نقله في بنية السيو الجديدة لـ TechFix AI.
+        ط¹ط°ط±ط§ظ‹! ظٹط¨ط¯ظˆ ط£ظ† ط§ظ„ط±ط§ط¨ط· ط§ظ„ط°ظٹ ط­ط§ظˆظ„طھ ط§ظ„ظˆطµظˆظ„ ط¥ظ„ظٹظ‡ ط؛ظٹط± ظ…طھظˆظپط± ط£ظˆ طھظ… ظ†ظ‚ظ„ظ‡ ظپظٹ ط¨ظ†ظٹط© ط§ظ„ط³ظٹظˆ ط§ظ„ط¬ط¯ظٹط¯ط© ظ„ظ€ TechFix AI.
       </p>
       <button
         onClick={() => onNavigate('/')}
         className="px-6 py-2.5 font-bold text-xs bg-brand-blue hover:bg-brand-blue/80 text-white rounded-xl cursor-pointer shadow-md transition-colors"
       >
-        العودة للصفحة الرئيسية
+        ط§ظ„ط¹ظˆط¯ط© ظ„ظ„طµظپط­ط© ط§ظ„ط±ط¦ظٹط³ظٹط©
       </button>
     </div>
   );
@@ -62,7 +62,7 @@ export default function App() {
   });
   const [adminUser, setAdminUser] = useState<boolean>(false);
 
-  // Load database hooks representing our Firestore única source
+  // Load database hooks representing our Firestore أ؛nica source
   const {
     posts,
     categories,
@@ -118,7 +118,7 @@ export default function App() {
         {loading ? (
           <div className="py-24 text-center space-y-4">
             <div className="w-10 h-10 border-4 border-brand-cyan border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-xs text-gray-500">جاري تنظيم مستودعات المقالات والسيو لـ TechFix AI...</p>
+            <p className="text-xs text-gray-500">ط¬ط§ط±ظٹ طھظ†ط¸ظٹظ… ظ…ط³طھظˆط¯ط¹ط§طھ ط§ظ„ظ…ظ‚ط§ظ„ط§طھ ظˆط§ظ„ط³ظٹظˆ ظ„ظ€ TechFix AI...</p>
           </div>
         ) : (
           <Routes>
@@ -132,14 +132,18 @@ export default function App() {
             <Route path="/privacy" element={<PrivacyView />} />
             <Route path="/disclaimer" element={<DisclaimerView />} />
             <Route path="/admin" element={
-              <AdminView
-                posts={posts}
-                categories={categories}
-                onSavePost={savePost}
-                onRemovePost={removePost}
-                onSaveCategory={saveCategory}
-                onRemoveCategory={removeCategory}
-              />
+              adminUser ? (
+                <AdminView
+                  posts={posts}
+                  categories={categories}
+                  onSavePost={savePost}
+                  onRemovePost={removePost}
+                  onSaveCategory={saveCategory}
+                  onRemoveCategory={removeCategory}
+                />
+              ) : (
+                <Navigate to="/" replace />
+              )
             } />
             <Route path="*" element={<NotFoundView onNavigate={navigate} />} />
           </Routes>
@@ -151,3 +155,4 @@ export default function App() {
     </div>
   );
 }
+
