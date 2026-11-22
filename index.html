@@ -24,6 +24,16 @@
   </head>
   <body>
     <div id="root"><!--prerender--></div>
+    <!-- A-ADS: شريط ثابت في HTML (خارج React) حتى يتحقق منه روبوت A-ADS بدون JavaScript -->
+    <style>.aads-static{max-width:970px;margin:0 auto 16px;padding:0 16px;text-align:center}.aads-m{display:none}@media (max-width:767px){.aads-d{display:none}.aads-m{display:block}}</style>
+    <div class="aads-static">
+      <div id="frame" class="aads-d" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
+        <iframe data-aa='2462899' src='//acceptable.a-ads.com/2462899/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+      </div>
+      <div id="frame-m" class="aads-m" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
+        <iframe data-aa='2462900' src='//acceptable.a-ads.com/2462900/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
