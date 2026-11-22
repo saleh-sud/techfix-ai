@@ -52,7 +52,10 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto pt-6 border-t border-gray-200 dark:border-slate-800 text-center text-[11px] text-gray-400">
-        © {year} TechFix AI. جميع الحقوق محفوظة.
+        <p>© {year} TechFix AI. جميع الحقوق محفوظة.</p>
+        <p dir="ltr" className="mt-2 text-xs font-bold text-gray-500 dark:text-gray-400">
+          Made with 🖤 by <span className="text-gray-800 dark:text-white font-extrabold">Hadi Saleh</span>
+        </p>
       </div>
     </footer>
   );

@@ -128,7 +128,7 @@ const jsonLd = (r) => {
 const STYLE = "max-width:960px;margin:24px auto;padding:0 16px;font-family:Tahoma,sans-serif;line-height:1.9";
 const nav = `<header style="${STYLE}"><a href="/"><strong>TechFix AI</strong></a> · <a href="/posts">كل المقالات</a> · <a href="/categories">الأقسام</a> · <a href="/about">من نحن</a> · <a href="/contact">تواصل معنا</a>
 <nav>${CATEGORIES.map((c) => `<a href="/category/${c.id}">${esc(c.name)}</a>`).join(" · ")}</nav></header>`;
-const footer = `<footer style="${STYLE}"><a href="/privacy">سياسة الخصوصية</a> · <a href="/terms">شروط الاستخدام</a> · <a href="/disclaimer">إخلاء المسؤولية</a> · <a href="/rss.xml">RSS</a> · ${esc(config.contactEmail)}</footer>`;
+const footer = `<footer style="${STYLE}"><a href="/privacy">سياسة الخصوصية</a> · <a href="/terms">شروط الاستخدام</a> · <a href="/disclaimer">إخلاء المسؤولية</a> · <a href="/rss.xml">RSS</a> · ${esc(config.contactEmail)}<p dir="ltr">Made with 🖤 by Hadi Saleh</p></footer>`;
 
 function articleBody(a, lang) {
   const en = lang === "en";
