@@ -1,32 +1,27 @@
-export type PostStatus = 'draft' | 'published';
+/** بيانات المقال الوصفية (src/data/articles.json). النص الكامل في src/content/articles/<slug>.json */
+export interface ArticleMeta {
+  slug: string;
+  title: string;
+  titleEn: string;
+  summary: string;
+  summaryEn: string;
+  category: string; // معرّف التصنيف من src/data/categories.ts
+  readTime: string;
+  date: string; // YYYY-MM-DD
+  hasEn: boolean;
+}
+
+export interface ArticleBody {
+  content: string;
+  contentEn: string;
+}
+
+export type Article = ArticleMeta & Partial<ArticleBody>;
 
 export interface Category {
-  id: string; // Firestore document ID
+  id: string;
   name: string;
-  slug: string;
+  nameEn: string;
   description: string;
-}
-
-export interface Post {
-  id: string; // Firestore document ID
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  featuredImage: string;
-  category: string; // Category ID
-  tags: string[];
-  metaTitle: string;
-  metaDescription: string;
-  status: PostStatus;
-  createdAt: any; // Firestore Timestamp
-  updatedAt: any; // Firestore Timestamp
-}
-
-export interface ContactMessage {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  createdAt: any;
+  icon: string; // emoji
 }

@@ -1,0 +1,76 @@
+# عامل المقالات: 3 مرات باليوم، مقال (~1000 كلمة عربي + نسخة إنجليزية) عبر Pollinations.ai المجاني بدون مفتاح.
+# بعد الـ push، Cloudflare Pages يبني وينشر لحاله (Git integration)، وبعدها نبلّغ IndexNow (Bing / Yandex).
+name: Daily articles
+
+on:
+  schedule:
+    - cron: "0 5 * * *"   # 08:00 بتوقيت دمشق/السعودية
+    - cron: "0 11 * * *"  # 14:00
+    - cron: "0 17 * * *"  # 20:00
+  workflow_dispatch:
+    inputs:
+      count:
+        description: "عدد المقالات في هذا التشغيل"
+        default: "1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: articles
+  cancel-in-progress: false
+
+jobs:
+  write-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Write article(s)
+        id: gen
+        timeout-minutes: 60
+        run: node scripts/generate-article.mjs --count "${{ github.event.inputs.count || '1' }}"
+
+      - name: Build (تأكد أن الموقع يبنى قبل النشر)
+        run: npm run build
+
+      - name: Commit & push
+        id: push
+        run: |
+          git add src/data/articles.json src/content/articles scripts/article-topics.json
+          if git diff --cached --quiet; then
+            echo "No new article"; exit 0
+          fi
+          git config user.name "articles-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Add article(s): ${{ steps.gen.outputs.new_urls }}"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && echo "pushed=true" >> "$GITHUB_OUTPUT" && exit 0
+            sleep 10
+          done
+          exit 1
+
+      - name: Wait for Cloudflare Pages deploy
+        if: steps.push.outputs.pushed == 'true' && steps.gen.outputs.new_urls != ''
+        run: |
+          SITE=$(node -p "require('./site.config.json').siteUrl")
+          FIRST=$(echo "${{ steps.gen.outputs.new_urls }}" | cut -d' ' -f1)
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$SITE$FIRST")
+            echo "try $i: $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 30
+          done
+          echo "::warning::Page not live yet after 20 min"
+
+      - name: Ping IndexNow (Bing / Yandex)
+        if: steps.push.outputs.pushed == 'true' && steps.gen.outputs.new_urls != ''
+        run: npm run indexnow -- ${{ steps.gen.outputs.new_urls }} /posts /

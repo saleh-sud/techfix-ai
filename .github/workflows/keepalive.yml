@@ -1,0 +1,20 @@
+# GitHub يوقف الـ schedule إذا ما في نشاط بالمستودع 60 يوم. هذا الملف يعيد تفعيل عامل المقالات تلقائياً كل أسبوع.
+name: Keep schedule alive
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          gh api -X PUT "repos/${{ github.repository }}/actions/workflows/articles.yml/enable" || true
+          gh api -X PUT "repos/${{ github.repository }}/actions/workflows/keepalive.yml/enable" || true
+        env:
+          GH_TOKEN: ${{ github.token }}
