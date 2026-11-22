@@ -12,14 +12,14 @@
   },
   {
     "slug": "quantum-computers-cryptography",
-    "title": "جيل جديد من الحواسب الكمومية: تغيير جذري مرتقب لعالم التشفير وأمن المعلومات",
-    "titleEn": "",
-    "summary": "شرح مبسط لمفهوم الحوسبة الكمومية وفهم خطورة الكيوبت على خوارزميات التشفير RSA الحالية، ومفهوم التشفير المقاوم للكم والأمن السيبراني المستقبلي.",
-    "summaryEn": "",
+    "title": "جيل جديد من الحواسب الكمومية: ثورة في التشفير وأمن المعلومات",
+    "titleEn": "A New Generation of Quantum Computers: Revolutionizing Encryption and Information Security",
+    "summary": "يستعرض المقال الجيل القادم من الحواسب الكمومية، كيف سيحدث انقلابًا في تشفير البيانات، ويقدم خطوات عملية لتأمين الأنظمة، مع نصائح مجربة للخبراء المبتدئين والمتقدمين.",
+    "summaryEn": "Explore how next‑gen quantum computers will overturn traditional encryption, with practical steps, expert tips, and a roadmap to secure your systems.",
     "category": "tech",
-    "readTime": "3 دقائق",
-    "date": "2026-05-28",
-    "hasEn": false
+    "readTime": "6 دقائق",
+    "date": "2026-11-22",
+    "hasEn": true
   },
   {
     "slug": "top-5-ai-tools-developers-2026",
