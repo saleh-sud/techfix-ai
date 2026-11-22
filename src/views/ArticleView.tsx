@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Calendar, Clock, ChevronLeft, ExternalLink } from "lucide-react";
-import { ARTICLES, loadArticleBody } from "../data/articles";
+import { ARTICLES, loadArticleBody, preloadedBody } from "../data/articles";
 import { categoryById } from "../data/categories";
 import { parseArticle, inlineHtml, relatedArticles, sourcesFor, tocOf, type ArticleBlock } from "../seo/articleMarkup";
 import { useSeo } from "../seo/useSeo";
@@ -33,13 +33,22 @@ export default function ArticleView({ lang = "ar" }: { lang?: "ar" | "en" }) {
   const { slug = "" } = useParams();
   const en = lang === "en";
   const meta = ARTICLES.find((a) => a.slug === slug);
-  const [body, setBody] = useState<ArticleBody | null>(null);
+  const [loaded, setLoaded] = useState<{ slug: string; body: ArticleBody } | null>(null);
   const [failed, setFailed] = useState(false);
+  const pre = preloadedBody(slug);
+  const body = pre || (loaded?.slug === slug ? loaded.body : null);
 
   useEffect(() => {
-    setBody(null);
+    if (preloadedBody(slug)) return;
     setFailed(false);
-    loadArticleBody(slug).then((b) => (b ? setBody(b) : setFailed(true)), () => setFailed(true));
+    let alive = true;
+    loadArticleBody(slug).then(
+      (b) => alive && (b ? setLoaded({ slug, body: b }) : setFailed(true)),
+      () => alive && setFailed(true)
+    );
+    return () => {
+      alive = false;
+    };
   }, [slug]);
 
   const blocks = useMemo(() => parseArticle((en ? body?.contentEn : body?.content) || ""), [body, en]);
@@ -81,7 +90,7 @@ export default function ArticleView({ lang = "ar" }: { lang?: "ar" | "en" }) {
             </Link>
             <h1 className="text-2xl md:text-3xl font-black leading-relaxed text-gray-900 dark:text-white">{en ? meta.titleEn : meta.title}</h1>
             <p className="text-sm text-gray-600 dark:text-gray-300 leading-loose">{en ? meta.summaryEn : meta.summary}</p>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-gray-400 py-2 border-y border-gray-100 dark:border-slate-800">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 py-2 border-y border-gray-100 dark:border-slate-800">
               <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /><time dateTime={meta.date}>{meta.date}</time></span>
               {!en && <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{meta.readTime}</span>}
               {meta.hasEn && (
@@ -97,7 +106,7 @@ export default function ArticleView({ lang = "ar" }: { lang?: "ar" | "en" }) {
               <h2 className="text-sm font-black mb-3">{en ? "Table of contents" : "فهرس المقال"}</h2>
               <ol className="list-decimal pr-5 pl-5 space-y-1.5 text-xs">
                 {toc.map((h) => (
-                  <li key={h.id}><a href={`#${h.id}`} className="text-gray-600 dark:text-gray-300 hover:text-brand-blue">{h.text}</a></li>
+                  <li key={h.id}><a href={`#${h.id}`} className="inline-block py-1.5 text-gray-600 dark:text-gray-300 hover:text-brand-blue">{h.text}</a></li>
                 ))}
               </ol>
             </nav>

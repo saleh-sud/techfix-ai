@@ -38,12 +38,12 @@ export default function Header({ isDarkMode, onThemeToggle }: { isDarkMode: bool
         aria-label="بحث"
         className="w-full md:w-56 pr-9 pl-3 py-2 text-xs rounded-xl bg-gray-100 dark:bg-slate-900 border border-transparent focus:border-brand-cyan outline-none"
       />
-      <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+      <Search className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" />
     </form>
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-gray-200 dark:border-slate-800">
+    <header className="sticky top-0 z-50 w-full bg-white dark:bg-slate-950 border-b border-gray-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2 shrink-0 font-black" aria-label="TechFix AI الرئيسية">
           <span className="p-2 bg-gradient-to-tr from-brand-blue to-brand-cyan text-white rounded-xl shadow-md">

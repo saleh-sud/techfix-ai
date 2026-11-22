@@ -14,30 +14,29 @@ import { AboutView, ContactView, PrivacyView, TermsView, DisclaimerView } from "
 
 export default function App() {
   const { pathname } = useLocation();
-  const [dark, setDark] = useState(() => {
-    try {
-      return localStorage.getItem("techfix_dark_mode") === "true";
-    } catch {
-      return false;
-    }
-  });
-
+  // يبدأ فاتحاً (مطابق للـ SSR) ثم يقرأ التفضيل المحفوظ؛ سكربت في index.html يطبّق الوضع الليلي قبل الرسم
+  const [dark, setDark] = useState(false);
   useEffect(() => {
+    setDark(document.documentElement.classList.contains("dark"));
+  }, []);
+  const toggleDark = () => {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.classList.toggle("dark", next);
     try {
-      localStorage.setItem("techfix_dark_mode", String(dark));
+      localStorage.setItem("techfix_dark_mode", String(next));
     } catch {
       /* ignore */
     }
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans arabic-rtl ${dark ? "bg-slate-950 text-slate-100" : "bg-[#F8FAFC] text-slate-900"}`}>
-      <Header isDarkMode={dark} onThemeToggle={() => setDark(!dark)} />
+    <div className="min-h-screen flex flex-col font-sans arabic-rtl bg-[#F8FAFC] text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      <Header isDarkMode={dark} onThemeToggle={toggleDark} />
       <main className="flex-grow max-w-7xl w-full mx-auto px-4 md:px-8 py-8 md:py-12">
         <Routes>
           <Route path="/" element={<HomeView />} />

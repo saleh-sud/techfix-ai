@@ -125,48 +125,17 @@ const jsonLd = (r) => {
   return "";
 };
 
-const STYLE = "max-width:960px;margin:24px auto;padding:0 16px;font-family:Tahoma,sans-serif;line-height:1.9";
-const nav = `<header style="${STYLE}"><a href="/"><strong>TechFix AI</strong></a> · <a href="/posts">كل المقالات</a> · <a href="/categories">الأقسام</a> · <a href="/about">من نحن</a> · <a href="/contact">تواصل معنا</a>
-<nav>${CATEGORIES.map((c) => `<a href="/category/${c.id}">${esc(c.name)}</a>`).join(" · ")}</nav></header>`;
-const footer = `<footer style="${STYLE}"><a href="/privacy">سياسة الخصوصية</a> · <a href="/terms">شروط الاستخدام</a> · <a href="/disclaimer">إخلاء المسؤولية</a> · <a href="/rss.xml">RSS</a> · ${esc(config.contactEmail)}<p dir="ltr">Made with 🖤 by Hadi Saleh</p></footer>`;
+// ---------- SSR: نفس مكوّنات React تُرسم لـ HTML كامل (يظهر فوراً ويقرأه جوجل بدون JavaScript) ----------
+const { render: ssr } = await import(pathToFileURL(path.join(ROOT, "dist-ssr", "entry-server.js")).href);
 
-function articleBody(a, lang) {
-  const en = lang === "en";
-  const blocks = parseArticle(en ? a.contentEn : a.content);
-  const toc = tocOf(blocks);
-  const c = catName(a.category);
-  const related = relatedArticles(ARTICLES, a, 4)
-    .map((x) => `<li><a href="${en && x.hasEn ? "/en" : ""}/post/${x.slug}">${esc(en && x.hasEn ? x.titleEn : x.title)}</a></li>`)
-    .join("");
-  const sources = sourcesFor(a.category)
-    .map((s) => `<li><a href="${s.url}" rel="noopener" target="_blank">${esc(en ? s.labelEn : s.label)}</a></li>`)
-    .join("");
-  return `<main style="${STYLE}" dir="${en ? "ltr" : "rtl"}">
-<nav aria-label="breadcrumb"><a href="/">${en ? "Home" : "الرئيسية"}</a> › <a href="/category/${c.id}">${esc(en ? c.nameEn : c.name)}</a></nav>
-<article><h1>${esc(en ? a.titleEn : a.title)}</h1><p><time datetime="${a.date}">${a.date}</time> · ${esc(en ? c.nameEn : c.name)}</p>
-<p><strong>${esc(en ? a.summaryEn : a.summary)}</strong></p>
-${a.hasEn ? `<p><a href="${en ? "" : "/en"}/post/${a.slug}" hreflang="${en ? "ar" : "en"}">${en ? "اقرأ بالعربية" : "Read in English"}</a></p>` : ""}
-${toc.length > 2 ? `<nav><h2>${en ? "Table of contents" : "فهرس المقال"}</h2><ol>${toc.map((h) => `<li><a href="#${h.id}">${esc(h.text)}</a></li>`).join("")}</ol></nav>` : ""}
-${blocksToHtml(blocks)}
-</article>
-<h2>${en ? "Related articles" : "مقالات ذات صلة"}</h2><ul>${related}</ul>
-<h2>${en ? "Trusted sources" : "مصادر خارجية موثوقة"}</h2><ul>${sources}</ul>
-</main>`;
-}
-
-function listBody(r) {
-  const items = (r.listing || [])
-    .map((a) => `<li><a href="/post/${a.slug}">${esc(a.title)}</a> — ${esc(a.summary)}</li>`)
-    .join("\n");
-  const base = r.path.replace(/\/page\/\d+$/, "");
-  const pager =
-    r.totalPages > 1
-      ? `<nav>${Array.from({ length: r.totalPages }, (_, i) => i + 1)
-          .map((p) => `<a href="${p === 1 ? base : `${base}/page/${p}`}">${p}</a>`)
-          .join(" ")}</nav>`
-      : "";
-  return `<main style="${STYLE}"><h1>${esc(r.title.split(" | ")[0])}</h1><p>${esc(r.description)}</p><ul>${items}</ul>${pager}</main>`;
-}
+// CSS مضمّن في الصفحة (بدون طلب يعيق العرض) + تحميل مسبق لخط Cairo العربي
+const cssLink = template.match(/<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/);
+const cssText = cssLink ? fs.readFileSync(path.join(DIST, cssLink[1]), "utf8") : "";
+const arabicFont = "cairo-arabic.woff2";
+const baseTemplate = (cssLink ? template.replace(cssLink[0], `<style>${cssText}</style>`) : template).replace(
+  "<!--preload-->",
+  arabicFont ? `<link rel="preload" href="/fonts/${arabicFont}" as="font" type="font/woff2" crossorigin />` : ""
+);
 
 function render(r, { noindex = false } = {}) {
   const url = urlOf(r.path);
@@ -201,16 +170,13 @@ function render(r, { noindex = false } = {}) {
     <meta name="twitter:description" content="${esc(r.description)}" />
     <meta name="twitter:image" content="${esc(image)}" />
     ${jsonLd(r)}`;
-  const latest = ARTICLES.slice(0, 24).map((a) => `<li><a href="/post/${a.slug}">${esc(a.title)}</a></li>`).join("");
-  const body = r.article
-    ? articleBody(r.article, r.articleLang)
-    : r.listing
-      ? listBody(r)
-      : `<main style="${STYLE}"><h1>${esc(r.title.split(" | ")[0])}</h1><p>${esc(r.description)}</p><h2>أحدث المقالات</h2><ul>${latest}</ul></main>`;
-  return template
+  const art = r.article ? { slug: r.article.slug, content: r.article.content || "", contentEn: r.article.contentEn || "" } : undefined;
+  const html = ssr(r.path, art);
+  const preload = art ? `<script>window.__TF_ARTICLE__=${JSON.stringify(art).replace(/</g, String.fromCharCode(92) + "u003c")}</script>` : "";
+  return baseTemplate
     .replace(/<!-- seo:start[\s\S]*?<!-- seo:end -->/, head)
     .replace('<html lang="ar" dir="rtl">', `<html lang="${r.lang}" dir="${r.lang === "en" ? "ltr" : "rtl"}">`)
-    .replace("<!--prerender-->", nav + body + footer);
+    .replace('<div id="root"><!--prerender--></div>', `<div id="root">${html}</div>${preload}`);
 }
 
 let count = 0;
@@ -224,4 +190,5 @@ for (const r of routes) {
 fs.writeFileSync(path.join(DIST, "404.html"), render({ ...NOT_FOUND_META, path: "/404", lang: "ar", changefreq: "", priority: "" }, { noindex: true }));
 
 const files = (d) => fs.readdirSync(d, { withFileTypes: true }).reduce((n, e) => n + (e.isDirectory() ? files(path.join(d, e.name)) : 1), 0);
+fs.rmSync(path.join(ROOT, "dist-ssr"), { recursive: true, force: true });
 console.log(`✅ sitemaps + rss + robots + ${count} prerendered pages + 404.html — ${files(DIST)} files in dist (Cloudflare limit 20000)  site: ${SITE_URL}`);

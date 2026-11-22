@@ -30,6 +30,7 @@ export default function CookieConsent() {
       dir="rtl"
       className="fixed bottom-3 inset-x-3 md:inset-x-auto md:right-4 md:max-w-md z-[100000] bg-slate-900 text-white rounded-2xl shadow-2xl p-4 text-xs leading-relaxed"
       role="dialog"
+      aria-label="موافقة ملفات تعريف الارتباط"
       aria-live="polite"
     >
       <p className="mb-3">
@@ -42,7 +43,7 @@ export default function CookieConsent() {
         <button onClick={() => choose("essential")} className="px-3 py-1.5 rounded-lg border border-slate-600 hover:bg-slate-800 cursor-pointer">
           الضرورية فقط
         </button>
-        <button onClick={() => choose("all")} className="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-600 font-bold cursor-pointer">
+        <button onClick={() => choose("all")} className="px-3 py-1.5 rounded-lg bg-cyan-700 hover:bg-cyan-800 font-bold cursor-pointer">
           موافق
         </button>
       </div>

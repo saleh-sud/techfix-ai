@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
 
         <div className="md:col-span-5 space-y-3">
-          <h2 className="text-xs font-extrabold text-gray-400 uppercase">الأقسام</h2>
+          <h2 className="text-xs font-extrabold text-gray-500 uppercase">الأقسام</h2>
           <ul className="grid grid-cols-2 gap-2">
             {CATEGORIES.map((c) => (
               <li key={c.id}>
@@ -40,7 +40,7 @@ export default function Footer() {
         </div>
 
         <div className="md:col-span-3 space-y-3">
-          <h2 className="text-xs font-extrabold text-gray-400 uppercase">روابط مهمة</h2>
+          <h2 className="text-xs font-extrabold text-gray-500 uppercase">روابط مهمة</h2>
           <ul className="space-y-2">
             <li><Link to="/about" className={a}>من نحن</Link></li>
             <li><Link to="/contact" className={a}>تواصل معنا</Link></li>
@@ -51,7 +51,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto pt-6 border-t border-gray-200 dark:border-slate-800 text-center text-[11px] text-gray-400">
+      <div className="max-w-7xl mx-auto pt-6 border-t border-gray-200 dark:border-slate-800 text-center text-[11px] text-gray-500">
         <p>© {year} TechFix AI. جميع الحقوق محفوظة.</p>
         <p dir="ltr" className="mt-2 text-xs font-bold text-gray-500 dark:text-gray-400">
           Made with 🖤 by <span className="text-gray-800 dark:text-white font-extrabold">Hadi Saleh</span>

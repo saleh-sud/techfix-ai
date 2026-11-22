@@ -34,7 +34,7 @@ export function ArticleCard({ a }: { a: ArticleMeta }) {
           <Link to={`/post/${a.slug}`}>{a.title}</Link>
         </h3>
         <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-3">{a.summary}</p>
-        <div className="mt-auto pt-2 flex items-center gap-3 text-[11px] text-gray-400">
+        <div className="mt-auto pt-2 flex items-center gap-3 text-[11px] text-gray-500">
           <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{a.date}</span>
           <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{a.readTime}</span>
         </div>
@@ -71,7 +71,7 @@ export function Pagination({ page, total, base }: { page: number; total: number;
       {page > 1 && <Link to={href(page - 1)} className="px-3 py-1.5 rounded-lg text-xs bg-gray-100 dark:bg-slate-900">السابق</Link>}
       {nums.map((p, i) => (
         <Fragment key={p}>
-          {i > 0 && p - nums[i - 1] > 1 && <span className="px-1 text-gray-400">…</span>}
+          {i > 0 && p - nums[i - 1] > 1 && <span className="px-1 text-gray-500">…</span>}
           <Link
             to={href(p)}
             aria-current={p === page ? "page" : undefined}

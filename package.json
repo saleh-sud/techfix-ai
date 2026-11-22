@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && node scripts/postbuild.mjs",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/postbuild.mjs",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "article": "node scripts/generate-article.mjs",

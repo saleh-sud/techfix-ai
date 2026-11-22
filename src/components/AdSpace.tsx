@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { AD_NETWORK_ORDER, ADS_CONFIG, AdSlotName } from "../config/ads";
+import { useInteracted } from "../lib/interaction";
 
 interface AdSpaceProps {
   type: AdSlotName;
@@ -14,64 +14,50 @@ const SIZE: Record<AdSlotName, { w: number; h: number }> = {
   native: { w: 1000, h: 320 },
 };
 
-const MOBILE_QUERY = "(max-width: 767px)";
+const srcDoc = (code: string) =>
+  `<!doctype html><html><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:transparent;text-align:center}</style></head><body>${code}</body></html>`;
 
-/** على الشاشات الصغيرة يُستبدل البانر العلوي 728×90 ببانر الجوال. */
-function useSlot(type: AdSlotName): AdSlotName {
-  const [mobile, setMobile] = useState(
-    () => typeof window !== "undefined" && window.matchMedia(MOBILE_QUERY).matches
+/** مكان إعلان واحد: يحجز المساحة مسبقاً (بدون اهتزاز للصفحة) ويحمّل الإعلانات بعد أول تفاعل. */
+function Slot({ type, className = "" }: { type: AdSlotName; className?: string }) {
+  const ready = useInteracted();
+  const { w, h } = SIZE[type];
+  const fluid = type === "native";
+  const ids = AD_NETWORK_ORDER.filter((id) => ADS_CONFIG[id].enabled && ADS_CONFIG[id].slots[type].trim());
+  if (!ids.length) return null;
+  return (
+    <div className={`my-4 flex-col items-center gap-3 ${className}`} aria-label="إعلان" role="complementary">
+      {ids.map((id) =>
+        ready ? (
+          <iframe
+            key={id}
+            title={`إعلان ${ADS_CONFIG[id].label}`}
+            loading="lazy"
+            scrolling="no"
+            width={fluid ? "100%" : w}
+            height={h}
+            style={{ border: 0, maxWidth: fluid ? w : "100%", width: fluid ? "100%" : undefined }}
+            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+            srcDoc={srcDoc(ADS_CONFIG[id].slots[type])}
+          />
+        ) : (
+          <div key={id} style={{ width: fluid ? "100%" : w, maxWidth: fluid ? w : "100%", height: h }} />
+        )
+      )}
+    </div>
   );
-  useEffect(() => {
-    const mq = window.matchMedia(MOBILE_QUERY);
-    const on = () => setMobile(mq.matches);
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
-  return type === "top" && mobile ? "mobile" : type;
 }
 
 /**
- * مكوّن إعلانات واحد لكل المنصات (HilltopAds / A-ADS / Adsterra).
- * كل إعلان يُعرض داخل iframe معزول (sandbox) حتى لا تتعارض السكربتات مع بعضها
- * ولا يصل كود الإعلان إلى صفحة الموقع. الإعدادات في src/config/ads.ts
+ * مكوّن إعلانات واحد لكل المنصات (HilltopAds / A-ADS / Adsterra). كل إعلان داخل iframe معزول (sandbox).
+ * البانر العلوي: 728×90 على الشاشات الكبيرة وبانر الجوال على الصغيرة (عبر CSS حتى يتطابق مع الـ SSR).
  */
-export default function AdSpace({ type: requested, isRtl = true }: AdSpaceProps) {
-  const type = useSlot(requested);
-  const { w, h } = SIZE[type];
-  const fluid = type === "native";
-  const active = AD_NETWORK_ORDER.filter((id) => ADS_CONFIG[id].enabled);
-  const withCode = active.filter((id) => ADS_CONFIG[id].slots[type].trim());
-
-  // في الموقع الحقيقي: لا نعرض شيئًا إذا لا يوجد كود. في وضع التطوير: مربع تنبيه واضح.
-  if (withCode.length === 0) {
-    if (!import.meta.env.DEV) return null;
-    const names = AD_NETWORK_ORDER.map((id) => ADS_CONFIG[id].label).join(" / ");
+export default function AdSpace({ type }: AdSpaceProps) {
+  if (type === "top")
     return (
-      <div
-        className="mx-auto my-4 flex items-center justify-center text-center text-[11px] text-slate-400 border border-dashed border-slate-300 rounded-lg bg-slate-50 px-3"
-        style={{ width: "100%", maxWidth: w, minHeight: h }}
-        data-ad-placeholder={type}
-      >
-        {isRtl ? `مكان إعلان (${type}) — الصق الكود في src/config/ads.ts — ${names}` : `Ad slot (${type}) — paste code in src/config/ads.ts — ${names}`}
-      </div>
+      <>
+        <Slot type="top" className="hidden md:flex" />
+        <Slot type="mobile" className="flex md:hidden" />
+      </>
     );
-  }
-
-  return (
-    <div className="my-4 flex flex-col items-center gap-3" id={`ad-space-${type}`}>
-      {withCode.map((id) => (
-        <iframe
-          key={id}
-          title={`ad-${id}-${type}`}
-          loading="lazy"
-          scrolling="no"
-          width={fluid ? "100%" : w}
-          height={h}
-          style={{ border: 0, maxWidth: fluid ? w : "100%", width: fluid ? "100%" : undefined }}
-          sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
-          srcDoc={`<!doctype html><html><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:transparent;text-align:center}</style></head><body>${ADS_CONFIG[id].slots[type]}</body></html>`}
-        />
-      ))}
-    </div>
-  );
+  return <Slot type={type} className="flex" />;
 }
