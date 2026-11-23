@@ -34,13 +34,13 @@
   },
   {
     "slug": "speed-optimization-guide-seo",
-    "title": "كيفية تحسين سرعة تحميل موقع الويب لتعزيز الترتيب في محرك البحث جوجل وفهرستها",
-    "titleEn": "",
-    "summary": "كل ما تريد معرفته عن تحسين Core Web Vitals لسرعة موقعك، تقليص ملفات التصاميم، ضغط الصور بصيغة WebP واستخدام شبكات التوصيل CDN لرفع ترتيب السيو.",
-    "summaryEn": "",
+    "title": "سرعة تحميل موقعك: دليلك لتحسين الأداء وزيادة ترتيبك على جوجل",
+    "titleEn": "Speed Up Your Site: The Ultimate Guide to Boost Performance and Rank Higher on Google",
+    "summary": "تعرف على أهم خطوات تسريع موقعك، من ضغط الصور إلى تحسين كود JavaScript، كي يزداد ظهوره في نتائج البحث بسرعة.",
+    "summaryEn": "Discover the essential steps to speed up your website—compress images, streamline JavaScript, and more—to boost visibility in Google search results quickly.",
     "category": "tutorials",
-    "readTime": "3 دقائق",
-    "date": "2026-05-20",
-    "hasEn": false
+    "readTime": "6 دقائق",
+    "date": "2026-11-23",
+    "hasEn": true
   }
 ]
