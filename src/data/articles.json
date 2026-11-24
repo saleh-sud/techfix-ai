@@ -64,5 +64,16 @@
     "readTime": "7 دقائق",
     "date": "2026-11-24",
     "hasEn": true
+  },
+  {
+    "slug": "android-storage-full-fix",
+    "title": "كيف تُفرغ ذاكرة هاتفك الأندرويد وتعتني بمساحتك",
+    "titleEn": "How to Free Your Android Phone’s Memory and Keep Your Space Clean",
+    "summary": "دليل خطوة بخطوة لإزالة تراكم البيانات على أندرويد وتحرير المساحة بسرعة وفاعلية، من حذف الملفات المكررة إلى تحسين الإعدادات.",
+    "summaryEn": "Step‑by‑step guide to clear clutter on Android—remove duplicates, delete cache, move apps, and tweak settings for efficient use of every gigabyte.",
+    "category": "android",
+    "readTime": "6 دقائق",
+    "date": "2026-11-24",
+    "hasEn": true
   }
 ]
