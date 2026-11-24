@@ -53,5 +53,16 @@
     "readTime": "5 دقائق",
     "date": "2026-11-23",
     "hasEn": true
+  },
+  {
+    "slug": "android-battery-drain-fix",
+    "title": "كيف تقلل نفاد بطارية أندرويد بسرعة وتمد يدك طاقة أطول",
+    "titleEn": "How to Extend Battery Life on Android Devices",
+    "summary": "تعرّف على أسباب بطارية أندرويد السريعة وضعّف أجهزتك بخطوات عملية ذكية لتحافظ على شحنك لفترات أطول دون ملاحق مضاهرة.",
+    "summaryEn": "Discover common battery drain culprits and smart tweaks to keep your Android charged longer without compromise.",
+    "category": "android",
+    "readTime": "7 دقائق",
+    "date": "2026-11-24",
+    "hasEn": true
   }
 ]
