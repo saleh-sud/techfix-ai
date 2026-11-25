@@ -27,11 +27,6 @@
       "category": "android"
     },
     {
-      "slug": "windows-11-slow-fix",
-      "keyword": "تسريع ويندوز 11 وحل مشكلة البطء خطوة بخطوة",
-      "category": "windows"
-    },
-    {
       "slug": "windows-blue-screen-fix",
       "keyword": "حل مشكلة الشاشة الزرقاء في ويندوز",
       "category": "windows"
@@ -290,6 +285,11 @@
       "slug": "android-wifi-connected-no-internet",
       "keyword": "حل مشكلة الواي فاي متصل ولا يوجد إنترنت في أندرويد",
       "category": "android"
+    },
+    {
+      "slug": "windows-11-slow-fix",
+      "keyword": "تسريع ويندوز 11 وحل مشكلة البطء خطوة بخطوة",
+      "category": "windows"
     }
   ]
 }
