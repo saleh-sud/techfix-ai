@@ -22,11 +22,6 @@
       "category": "android"
     },
     {
-      "slug": "android-wifi-connected-no-internet",
-      "keyword": "حل مشكلة الواي فاي متصل ولا يوجد إنترنت في أندرويد",
-      "category": "android"
-    },
-    {
       "slug": "google-play-not-downloading-apps",
       "keyword": "حل مشكلة متجر Google Play لا يحمّل التطبيقات",
       "category": "android"
@@ -289,6 +284,11 @@
     {
       "slug": "android-phone-overheating",
       "keyword": "أسباب سخونة هاتف أندرويد وطرق حلها",
+      "category": "android"
+    },
+    {
+      "slug": "android-wifi-connected-no-internet",
+      "keyword": "حل مشكلة الواي فاي متصل ولا يوجد إنترنت في أندرويد",
       "category": "android"
     }
   ]
