@@ -97,5 +97,16 @@
     "readTime": "6 دقائق",
     "date": "2026-11-26",
     "hasEn": true
+  },
+  {
+    "slug": "windows-100-percent-disk-usage",
+    "title": "حل مشكلة استهلاك القرص 100% في ويندوز",
+    "titleEn": "Fixing 100% Disk Usage in Windows",
+    "summary": "تعرف على الأسباب الشائعة لحدوث استهلاك القرص بالكامل في ويندوز، وتطبيق خطوات عملية لتفكيك المشكلة ورفع أداء الجهاز بسرعة.",
+    "summaryEn": "Discover common reasons for full disk usage on Windows, then follow practical steps to diagnose and resolve the issue—boosting performance fast.",
+    "category": "windows",
+    "readTime": "5 دقائق",
+    "date": "2026-11-26",
+    "hasEn": true
   }
 ]
