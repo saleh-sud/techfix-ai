@@ -36,7 +36,7 @@ function Slot({ type, className = "" }: { type: AdSlotName; className?: string }
             width={fluid ? "100%" : w}
             height={h}
             style={{ border: 0, maxWidth: fluid ? w : "100%", width: fluid ? "100%" : undefined }}
-            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
             srcDoc={srcDoc(ADS_CONFIG[id].slots[type])}
           />
         ) : (
@@ -48,7 +48,7 @@ function Slot({ type, className = "" }: { type: AdSlotName; className?: string }
 }
 
 /**
- * مكوّن إعلانات واحد لكل المنصات (HilltopAds / A-ADS / Adsterra). كل إعلان داخل iframe معزول (sandbox).
+ * مكوّن إعلانات واحد لكل المنصات (HilltopAds / A-ADS). كل إعلان داخل iframe معزول (sandbox).
  * البانر العلوي: 728×90 على الشاشات الكبيرة وبانر الجوال على الصغيرة (عبر CSS حتى يتطابق مع الـ SSR).
  */
 export default function AdSpace({ type }: AdSpaceProps) {

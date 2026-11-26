@@ -89,9 +89,15 @@ export function PrivacyView() {
       </p>
       <H>الإعلانات وأطراف ثالثة</H>
       <p>
-        يعرض الموقع إعلانات من شبكات خارجية مثل <strong>Adsterra</strong> و<strong>HilltopAds</strong> و<strong>A-ADS</strong>. قد تستخدم هذه
+        يعرض الموقع إعلانات من شبكات خارجية مثل <strong>Google AdSense</strong> و<strong>HilltopAds</strong> و<strong>A-ADS</strong>. قد تستخدم هذه
         الشبكات الكوكيز أو تقنيات مشابهة ومعرّفات الأجهزة لعرض إعلانات مناسبة وقياس النقرات ومنع الاحتيال، وفق سياسات الخصوصية الخاصة بها. لا
         نتحكم في هذه الكوكيز ولا نبيع بياناتك لأي طرف.
+      </p>
+      <H>إعلانات Google</H>
+      <p>
+        يستخدم موردون من أطراف ثالثة، ومنهم Google، ملفات كوكيز لعرض الإعلانات بناءً على زياراتك السابقة لهذا الموقع أو لمواقع أخرى، ويتيح ذلك
+        لـGoogle وشركائها عرض إعلانات لك وفق تلك الزيارات. يمكنك إيقاف الإعلانات المخصصة من <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">إعدادات إعلانات Google</a> أو
+        عبر <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.
       </p>
       <H>الروابط الخارجية</H>
       <p>تحتوي المقالات على روابط لمواقع خارجية. لسنا مسؤولين عن محتوى أو سياسات خصوصية تلك المواقع.</p>
