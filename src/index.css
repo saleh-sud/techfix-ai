@@ -61,7 +61,6 @@ html, body {
 .english-ltr {
   direction: ltr;
   text-align: left;
-  font-family: system-ui, sans-serif;
 }
 
 /* Elegant transition effects */

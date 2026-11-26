@@ -1,9 +1,9 @@
 import { AD_NETWORK_ORDER, ADS_CONFIG, AdSlotName } from "../config/ads";
 import { useInteracted } from "../lib/interaction";
+import { useLang } from "../lib/lang";
 
 interface AdSpaceProps {
   type: AdSlotName;
-  isRtl?: boolean;
 }
 
 const SIZE: Record<AdSlotName, { w: number; h: number }> = {
@@ -20,17 +20,18 @@ const srcDoc = (code: string) =>
 /** مكان إعلان واحد: يحجز المساحة مسبقاً (بدون اهتزاز للصفحة) ويحمّل الإعلانات بعد أول تفاعل. */
 function Slot({ type, className = "" }: { type: AdSlotName; className?: string }) {
   const ready = useInteracted();
+  const { t } = useLang();
   const { w, h } = SIZE[type];
   const fluid = type === "native";
   const ids = AD_NETWORK_ORDER.filter((id) => ADS_CONFIG[id].enabled && ADS_CONFIG[id].slots[type].trim());
   if (!ids.length) return null;
   return (
-    <div className={`my-4 flex-col items-center gap-3 ${className}`} aria-label="إعلان" role="complementary">
+    <div className={`my-4 flex-col items-center gap-3 ${className}`} aria-label={t("إعلان", "Advertisement")} role="complementary">
       {ids.map((id) =>
         ready ? (
           <iframe
             key={id}
-            title={`إعلان ${ADS_CONFIG[id].label}`}
+            title={`${t("إعلان", "Ad")} ${ADS_CONFIG[id].label}`}
             loading="lazy"
             scrolling="no"
             width={fluid ? "100%" : w}

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GlobalAds from "./components/GlobalAds";
 import CookieConsent from "./components/CookieConsent";
+import { useLang } from "./lib/lang";
 import HomeView from "./views/HomeView";
 import ListView from "./views/ListView";
 import ArticleView from "./views/ArticleView";
@@ -14,6 +15,7 @@ import { AboutView, ContactView, PrivacyView, TermsView, DisclaimerView } from "
 
 export default function App() {
   const { pathname } = useLocation();
+  const { en } = useLang();
   // يبدأ فاتحاً (مطابق للـ SSR) ثم يقرأ التفضيل المحفوظ؛ سكربت في index.html يطبّق الوضع الليلي قبل الرسم
   const [dark, setDark] = useState(false);
   useEffect(() => {
@@ -35,24 +37,27 @@ export default function App() {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans arabic-rtl bg-[#F8FAFC] text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div dir={en ? "ltr" : "rtl"} className={`min-h-screen flex flex-col font-sans ${en ? "english-ltr" : "arabic-rtl"} bg-[#F8FAFC] text-slate-900 dark:bg-slate-950 dark:text-slate-100`}>
       <Header isDarkMode={dark} onThemeToggle={toggleDark} />
       <main className="flex-grow max-w-7xl w-full mx-auto px-4 md:px-8 py-8 md:py-12">
         <Routes>
-          <Route path="/" element={<HomeView />} />
-          <Route path="/posts" element={<ListView />} />
-          <Route path="/posts/page/:page" element={<ListView />} />
-          <Route path="/category/:category" element={<ListView />} />
-          <Route path="/category/:category/page/:page" element={<ListView />} />
-          <Route path="/post/:slug" element={<ArticleView />} />
-          <Route path="/en/post/:slug" element={<ArticleView lang="en" />} />
-          <Route path="/categories" element={<CategoriesView />} />
-          <Route path="/search" element={<SearchView />} />
-          <Route path="/about" element={<AboutView />} />
-          <Route path="/contact" element={<ContactView />} />
-          <Route path="/privacy" element={<PrivacyView />} />
-          <Route path="/terms" element={<TermsView />} />
-          <Route path="/disclaimer" element={<DisclaimerView />} />
+          {["", "/en"].map((p) => (
+            <Fragment key={p || "ar"}>
+              <Route path={p || "/"} element={<HomeView />} />
+              <Route path={`${p}/posts`} element={<ListView />} />
+              <Route path={`${p}/posts/page/:page`} element={<ListView />} />
+              <Route path={`${p}/category/:category`} element={<ListView />} />
+              <Route path={`${p}/category/:category/page/:page`} element={<ListView />} />
+              <Route path={`${p}/post/:slug`} element={<ArticleView />} />
+              <Route path={`${p}/categories`} element={<CategoriesView />} />
+              <Route path={`${p}/search`} element={<SearchView />} />
+              <Route path={`${p}/about`} element={<AboutView />} />
+              <Route path={`${p}/contact`} element={<ContactView />} />
+              <Route path={`${p}/privacy`} element={<PrivacyView />} />
+              <Route path={`${p}/terms`} element={<TermsView />} />
+              <Route path={`${p}/disclaimer`} element={<DisclaimerView />} />
+            </Fragment>
+          ))}
           <Route path="*" element={<NotFoundView />} />
         </Routes>
       </main>

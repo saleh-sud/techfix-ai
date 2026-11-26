@@ -23,5 +23,6 @@ export interface Category {
   name: string;
   nameEn: string;
   description: string;
+  descriptionEn: string;
   icon: string; // emoji
 }

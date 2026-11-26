@@ -207,8 +207,8 @@ export function articleJsonLd(a: Article, siteUrl: string, siteName: string, ima
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: siteName, item: `${siteUrl}/` },
-        { "@type": "ListItem", position: 2, name: en ? "Articles" : "المقالات", item: `${siteUrl}/posts` },
+        { "@type": "ListItem", position: 1, name: siteName, item: `${siteUrl}${en ? "/en" : "/"}` },
+        { "@type": "ListItem", position: 2, name: en ? "Articles" : "المقالات", item: `${siteUrl}${en ? "/en" : ""}/posts` },
         { "@type": "ListItem", position: 3, name: en ? a.titleEn : a.title, item: url },
       ],
     },

@@ -101,7 +101,7 @@ ${rssItems}
 if (config.indexNowKey) fs.writeFileSync(path.join(DIST, `${config.indexNowKey}.txt`), config.indexNowKey);
 fs.writeFileSync(
   path.join(DIST, "robots.txt"),
-  `User-agent: *\nAllow: /\nDisallow: /search\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/rss.xml\n`
+  `User-agent: *\nAllow: /\nDisallow: /search\nDisallow: /en/search\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/rss.xml\n`
 );
 // ملف ads.txt (إن وُجد) يُنسخ من public تلقائياً عبر vite
 
@@ -111,14 +111,14 @@ const ld = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).re
 const image = SITE_URL + config.ogImage;
 
 const jsonLd = (r) => {
-  if (r.path === "/")
+  if (r.path === "/" || r.path === "/en")
     return ld({
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: NAME,
-      url: `${SITE_URL}/`,
-      inLanguage: "ar",
-      potentialAction: { "@type": "SearchAction", target: `${SITE_URL}/search?q={q}`, "query-input": "required name=q" },
+      url: urlOf(r.path),
+      inLanguage: r.lang,
+      potentialAction: { "@type": "SearchAction", target: `${SITE_URL}${r.lang === "en" ? "/en" : ""}/search?q={q}`, "query-input": "required name=q" },
     }) + ld({ "@context": "https://schema.org", "@type": "Organization", name: NAME, url: `${SITE_URL}/`, logo: `${SITE_URL}/favicon.svg`, email: config.contactEmail });
   if (r.article) return articleJsonLd(r.article, SITE_URL, NAME, image, r.articleLang).map(ld).join("");
   if (r.listing) return ld({ "@context": "https://schema.org", "@type": "CollectionPage", name: r.title, url: urlOf(r.path) });
@@ -158,7 +158,7 @@ function render(r, { noindex = false } = {}) {
       r.article
         ? `
     <meta property="article:published_time" content="${r.article.date}" />
-    <meta property="article:section" content="${esc(catName(r.article.category).name)}" />`
+    <meta property="article:section" content="${esc(catName(r.article.category)[r.lang === "en" ? "nameEn" : "name"])}" />`
         : ""
     }
     <meta property="og:locale" content="${r.lang === "en" ? "en_US" : "ar_AR"}" />
@@ -176,6 +176,8 @@ function render(r, { noindex = false } = {}) {
   return baseTemplate
     .replace(/<!-- seo:start[\s\S]*?<!-- seo:end -->/, head)
     .replace('<html lang="ar" dir="rtl">', `<html lang="${r.lang}" dir="${r.lang === "en" ? "ltr" : "rtl"}">`)
+    .replace('aria-label="إعلانات"', r.lang === "en" ? 'aria-label="Advertisements"' : 'aria-label="إعلانات"')
+    .replace(/title="إعلان A-ADS"/g, r.lang === "en" ? 'title="A-ADS ad"' : 'title="إعلان A-ADS"')
     .replace('<div id="root"><!--prerender--></div>', `<div id="root">${html}</div>${preload}`);
 }
 

@@ -2,13 +2,15 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Mail } from "lucide-react";
 import { SITE } from "../config/site";
-import { STATIC_PAGES } from "../seo/routes";
+import { staticPage } from "../seo/routes";
+import { useLang } from "../lib/lang";
 import { useSeo } from "../seo/useSeo";
 
 const UPDATED = "2026-11-22";
 
 function Page({ path, heading, children }: { path: string; heading: string; children: ReactNode }) {
-  useSeo({ ...STATIC_PAGES[path], path });
+  const { lang, to } = useLang();
+  useSeo({ ...staticPage(path, lang), path: to(path), lang, alternates: { ar: path, en: `/en${path}` } });
   return (
     <article className="max-w-3xl mx-auto bg-white dark:bg-slate-950 p-6 md:p-10 rounded-3xl border border-gray-200 dark:border-slate-800 text-sm leading-loose text-gray-700 dark:text-gray-300 space-y-4 info-page">
       <h1 className="text-2xl font-black text-gray-900 dark:text-white">{heading}</h1>
@@ -25,6 +27,7 @@ const Email = () => (
 );
 
 export function AboutView() {
+  if (useLang().en) return <AboutEn />;
   return (
     <Page path="/about" heading="من نحن">
       <p>
@@ -32,7 +35,7 @@ export function AboutView() {
         وكمبيوترك واتصالك بالإنترنت بنفسك، بلغة واضحة وخطوات مرتبة.
       </p>
       <H>ماذا نقدّم؟</H>
-      <ul className="list-disc pr-6 space-y-1">
+      <ul className="list-disc ps-6 space-y-1">
         <li>حلول مشاكل أندرويد وآيفون وويندوز خطوة بخطوة.</li>
         <li>شروحات تسريع الإنترنت وضبط الراوتر والواي فاي.</li>
         <li>نصائح الأمان وحماية الحسابات من الاختراق والاحتيال.</li>
@@ -53,6 +56,7 @@ export function AboutView() {
 }
 
 export function ContactView() {
+  if (useLang().en) return <ContactEn />;
   return (
     <Page path="/contact" heading="تواصل معنا">
       <p>يسعدنا تواصلك معنا لأي سؤال تقني، أو اقتراح موضوع مقال، أو الإبلاغ عن خطأ، أو استفسار يخص الإعلانات والتعاون.</p>
@@ -71,6 +75,7 @@ export function ContactView() {
 }
 
 export function PrivacyView() {
+  if (useLang().en) return <PrivacyEn />;
   return (
     <Page path="/privacy" heading="سياسة الخصوصية">
       <p className="text-xs text-gray-500">آخر تحديث: {UPDATED}</p>
@@ -115,6 +120,7 @@ export function PrivacyView() {
 }
 
 export function TermsView() {
+  if (useLang().en) return <TermsEn />;
   return (
     <Page path="/terms" heading="شروط الاستخدام">
       <p className="text-xs text-gray-500">آخر تحديث: {UPDATED}</p>
@@ -147,6 +153,7 @@ export function TermsView() {
 }
 
 export function DisclaimerView() {
+  if (useLang().en) return <DisclaimerEn />;
   return (
     <Page path="/disclaimer" heading="إخلاء المسؤولية">
       <p>
@@ -163,6 +170,154 @@ export function DisclaimerView() {
       </p>
       <p>
         للإبلاغ عن خطأ: <Email />
+      </p>
+    </Page>
+  );
+}
+
+// ---------- النسخة الإنجليزية ----------
+function AboutEn() {
+  return (
+    <Page path="/about" heading="About Us">
+      <p>
+        <strong>TechFix AI</strong> is a free website that makes technology simple for everyone. We publish practical articles and guides every day to
+        help you fix problems with your phone, computer and internet connection yourself, in plain language and clear steps. The site is available in
+        Arabic and English.
+      </p>
+      <H>What do we offer?</H>
+      <ul className="list-disc ps-6 space-y-1">
+        <li>Step-by-step fixes for Android, iPhone and Windows problems.</li>
+        <li>Guides to faster internet and router and Wi-Fi setup.</li>
+        <li>Security tips to protect your accounts from hacking and scams.</li>
+        <li>Reviews and tutorials for AI tools, software and apps.</li>
+        <li>Gaming, hardware and PC building guides.</li>
+      </ul>
+      <H>How do we write our content?</H>
+      <p>
+        We use AI tools to draft and organise articles, rely on official sources (such as Google, Apple and Microsoft support centres) and link to them
+        below the articles. Technology changes quickly, so if you spot outdated information or a mistake, tell us and we will correct it.
+      </p>
+      <H>Contact us</H>
+      <p>
+        For questions, suggestions or corrections: <Email />
+      </p>
+    </Page>
+  );
+}
+
+function ContactEn() {
+  return (
+    <Page path="/contact" heading="Contact Us">
+      <p>We are happy to hear from you about technical questions, article suggestions, error reports, or advertising and partnership enquiries.</p>
+      <a
+        href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent("Message from TechFix AI")}`}
+        className="inline-flex items-center gap-2 bg-brand-blue text-white font-bold px-5 py-3 rounded-xl not-prose"
+      >
+        <Mail className="w-4 h-4" /> Email us
+      </a>
+      <p>
+        Email: <Email />
+      </p>
+      <p className="text-xs text-gray-500">We usually reply within 2–5 working days. We will never ask you for passwords or payment details.</p>
+    </Page>
+  );
+}
+
+function PrivacyEn() {
+  return (
+    <Page path="/privacy" heading="Privacy Policy">
+      <p className="text-xs text-gray-500">Last updated: {UPDATED}</p>
+      <p>Your privacy matters to us. This policy explains what information TechFix AI ({SITE.siteUrl}) collects and how it is used.</p>
+      <H>Information we collect</H>
+      <p>
+        We do not ask you to create an account and we do not directly collect your name or personal data. When you email us, we use your address only to
+        reply. General technical data (such as browser type, IP address and visit date) may be logged automatically by our hosting provider for
+        security and performance purposes.
+      </p>
+      <H>Cookies</H>
+      <p>
+        We use cookies and local storage to remember your preferences (such as dark mode and your cookie choice). Advertising networks also use cookies
+        to show ads and measure their performance. You can delete or block cookies in your browser settings at any time.
+      </p>
+      <H>Advertising and third parties</H>
+      <p>
+        The site shows ads from external networks such as <strong>Google AdSense</strong>, <strong>HilltopAds</strong> and <strong>A-ADS</strong>.
+        These networks may use cookies or similar technologies and device identifiers to show relevant ads, measure clicks and prevent fraud, under
+        their own privacy policies. We do not control those cookies and we do not sell your data to anyone.
+      </p>
+      <H>Google advertising</H>
+      <p>
+        Third-party vendors, including Google, use cookies to serve ads based on your previous visits to this site or other sites, which enables Google
+        and its partners to show you ads based on those visits. You can opt out of personalised advertising in{" "}
+        <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google Ads Settings</a> or at{" "}
+        <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.
+      </p>
+      <H>External links</H>
+      <p>Articles contain links to external sites. We are not responsible for their content or privacy policies.</p>
+      <H>Your rights (GDPR and CCPA)</H>
+      <p>
+        If you are in the European Union or California, you may ask what data relates to you or request its deletion, and you may refuse non-essential
+        cookies through the consent banner. Privacy contact: <Email />
+      </p>
+      <H>Children</H>
+      <p>The site is not directed at children under 13 and we do not knowingly collect their data.</p>
+      <H>Changes</H>
+      <p>We may update this policy from time to time; the latest update date appears at the top of the page.</p>
+    </Page>
+  );
+}
+
+function TermsEn() {
+  return (
+    <Page path="/terms" heading="Terms of Use">
+      <p className="text-xs text-gray-500">Last updated: {UPDATED}</p>
+      <p>By using TechFix AI you agree to the following terms. If you do not agree, please do not use the site.</p>
+      <H>Nature of the content</H>
+      <p>
+        Content is for general educational and informational purposes. We do our best to keep it accurate and current, but we do not guarantee that it
+        is free of errors or suitable for your particular device or situation. Follow the steps at your own risk and back up your data before changing
+        your system.
+      </p>
+      <H>Intellectual property</H>
+      <p>
+        The text and design belong to TechFix AI. Short quotations are allowed with attribution and a link to the article; copying or republishing full
+        articles without written permission is not. Trademarks mentioned (such as Android, Windows and iPhone) belong to their owners.
+      </p>
+      <H>Acceptable use</H>
+      <p>You may not use the site for any unlawful purpose, try to breach or disrupt it, or harvest its content automatically in a way that harms its performance.</p>
+      <H>Ads and links</H>
+      <p>
+        The site shows third-party ads and external links. Your dealings with any advertiser or external site are governed by their own terms, and we
+        are not a party to them. See also our <Link to="/en/disclaimer" className="text-brand-blue">Disclaimer</Link> and{" "}
+        <Link to="/en/privacy" className="text-brand-blue">Privacy Policy</Link>.
+      </p>
+      <H>Limitation of liability</H>
+      <p>The site accepts no liability for data loss, device damage, or direct or indirect harm resulting from use of the content.</p>
+      <H>Contact</H>
+      <p>
+        Questions about these terms: <Email />
+      </p>
+    </Page>
+  );
+}
+
+function DisclaimerEn() {
+  return (
+    <Page path="/disclaimer" heading="Disclaimer">
+      <p>
+        Information on TechFix AI is provided in good faith and for general educational purposes only. It is not professional advice, and steps may
+        differ depending on your device or system version.
+      </p>
+      <p>
+        AI tools are used to prepare some articles, and content is reviewed and corrected when errors are reported. Always check the official sources
+        listed under each article before taking any sensitive action.
+      </p>
+      <p>
+        We accept no responsibility for damage resulting from following the steps, or for the content of ads or external sites. An ad appearing on the
+        site does not mean we recommend the advertised product or service.
+      </p>
+      <p>
+        To report an error: <Email />
       </p>
     </Page>
   );

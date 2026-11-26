@@ -72,4 +72,4 @@ jobs:
 
       - name: Ping IndexNow (Bing / Yandex)
         if: steps.push.outputs.pushed == 'true' && steps.gen.outputs.new_urls != ''
-        run: npm run indexnow -- ${{ steps.gen.outputs.new_urls }} /posts /
+        run: npm run indexnow -- ${{ steps.gen.outputs.new_urls }} /posts / /en/posts /en
