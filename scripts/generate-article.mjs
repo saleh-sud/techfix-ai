@@ -67,7 +67,10 @@ async function chat(messages, maxTokens = 2500) {
           method: "POST",
           signal: ctrl.signal,
           headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ model, messages, max_tokens: maxTokens, response_format: { type: "json_object" }, referrer: "techfix-ai" }),
+          body: JSON.stringify({ model, seed: Math.floor(Math.random() * 1e9),
+            // في إعادة المحاولة يتغير الطلب قليلاً، وإلا تعيد الخدمة الرد المخزّن نفسه (المقطوع) كل مرة.
+            messages: attempt > 1 || lastErr ? [...messages, { role: "user", content: `Reply with complete, valid and short JSON only (attempt ${attempt}, ${Date.now()}).` }] : messages,
+            max_tokens: maxTokens + 1000, response_format: { type: "json_object" }, referrer: "techfix-ai" }),
         }).finally(() => clearTimeout(timer));
         const text = await res.text();
         lastCall = Date.now();
