@@ -5,6 +5,7 @@
 //   node scripts/approval.mjs drop <slug>        -> يحذف الموضوع المرفوض من قائمة المواضيع
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -49,10 +50,38 @@ export function drop(slug) {
   fs.writeFileSync(path.join(ROOT, file), JSON.stringify(topics, null, 2) + "\n");
 }
 
+/** يضيف المقال المقبول إلى الفرع الأساسي (بدل دمج الطلب، حتى لا تتعارض عدة مقالات منتظرة). */
+export function publish(slug, branch, base) {
+  const git = (...args) => execFileSync("git", args, { cwd: ROOT, encoding: "utf8", maxBuffer: 50e6 });
+  git("fetch", "-q", "origin", branch);
+  const article = JSON.parse(git("show", `FETCH_HEAD:${META}`)).find((a) => a.slug === slug);
+  const text = git("show", `FETCH_HEAD:src/content/articles/${slug}.json`);
+  if (!article) throw new Error("article not found on its branch");
+  for (let attempt = 1; ; attempt++) {
+    git("fetch", "-q", "origin", base);
+    git("checkout", "-q", "-f", "-B", base, `origin/${base}`);
+    const list = read(META);
+    const i = list.findIndex((a) => a.slug === slug);
+    if (i >= 0) list[i] = article;
+    else list.push(article);
+    fs.writeFileSync(path.join(ROOT, META), JSON.stringify(list, null, 2) + "\n");
+    fs.writeFileSync(path.join(ROOT, `src/content/articles/${slug}.json`), text);
+    git("add", META, `src/content/articles/${slug}.json`);
+    git("commit", "-q", "-m", `Article: ${slug}`);
+    try {
+      git("push", "-q", "origin", `HEAD:${base}`);
+      return;
+    } catch (e) {
+      if (attempt === 4) throw e;
+    }
+  }
+}
+
 if (import.meta.url === pathToFileURL(process.argv[1] || "").href) {
-  const [command, slug] = process.argv.slice(2);
+  const [command, slug, branch, base] = process.argv.slice(2);
   if (command === "decide") console.log(decide(process.env.COMMENT));
   else if (command === "body") process.stdout.write(body(slug));
   else if (command === "drop") drop(slug);
+  else if (command === "publish") publish(slug, branch, base);
   else process.exit(1);
 }

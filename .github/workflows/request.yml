@@ -1,0 +1,53 @@
+# طلب مقال بأي وقت: صاحب المستودع يردّ على صفحة «اطلب مقال» (من الإيميل أو الموقع).
+name: Article request
+
+on:
+  issue_comment:
+    types: [created]
+  push:
+    branches: [main]
+    paths: [".github/workflows/request.yml"]
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: write
+  issues: write
+  pull-requests: read
+
+jobs:
+  page:
+    if: github.event_name != 'issue_comment'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create the request page once
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          n=$(gh issue list --state open --limit 100 --json title --jq '[.[] | select(.title | startswith("اطلب مقال"))] | length')
+          [ "$n" = "0" ] || exit 0
+          printf '%s\n' "@$OWNER لطلب مقال لموقع تك فيكس AI بأي وقت، رُدّ على هذا الإيميل. اكتب في أول سطر:" "" "- \`مقال\` — مقال واحد الآن" "- \`مقال 3\` — ثلاثة مقالات" "- \`مقال عن حل مشكلة كذا\` — موضوع تختاره" "- \`الحد 5\` — تغيير الحد اليومي (من 1 إلى 10)" "" "كل مقال يصلك للموافقة، ولا يُنشر قبل ردّك بكلمة «انشر». احتفظ بهذا الإيميل." > /tmp/page.md
+          gh issue create --title "اطلب مقال — تك فيكس AI" --body-file /tmp/page.md --assignee "$OWNER"
+
+  request:
+    # فقط ردّ صاحب المستودع، وفقط على صفحة الطلب
+    if: github.event_name == 'issue_comment' && !github.event.issue.pull_request && github.event.comment.user.login == github.repository_owner && startsWith(github.event.issue.title, 'اطلب مقال')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: article-request
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Handle the request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: main
+          COMMENT: ${{ github.event.comment.body }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: node scripts/requests.mjs handle

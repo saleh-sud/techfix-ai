@@ -9,8 +9,9 @@ permissions:
   contents: write
   pull-requests: write
 
+# مجموعة لكل طلب: الموافقة على مقال لا تلغي الموافقة على غيره
 concurrency:
-  group: articles
+  group: approve-${{ github.event.issue.number }}
   cancel-in-progress: false
 
 jobs:
@@ -42,17 +43,18 @@ jobs:
           echo "SLUG=$slug" >> "$GITHUB_ENV"
           answer=$(node scripts/approval.mjs decide)
           if [ "$answer" = "publish" ]; then
-            gh pr merge "$PR" --squash --delete-branch
-            git pull --ff-only origin main
+            git config user.name "articles-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            node scripts/approval.mjs publish "$slug" "$branch" main
             echo "published=true" >> "$GITHUB_OUTPUT"
-            gh pr comment "$PR" --body "تم قبول المقال، وهو يُنشر الآن."
+            gh pr close "$PR" --delete-branch --comment "تم قبول المقال، وهو يُنشر الآن."
           elif [ "$answer" = "reject" ]; then
             gh pr close "$PR" --delete-branch --comment "لن يُنشر هذا المقال."
             node scripts/approval.mjs drop "$slug"
             git config user.name "articles-bot"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add scripts/article-topics.json
-            git diff --cached --quiet || { git commit -m "Rejected topic: $slug" && git push origin HEAD:main; }
+            git diff --cached --quiet || { git commit -m "Rejected topic: $slug" && git pull --rebase origin main && git push origin HEAD:main; }
           else
             gh pr comment "$PR" --body "لم أفهم الرد. اكتب في أول سطر: انشر، أو: لا"
           fi

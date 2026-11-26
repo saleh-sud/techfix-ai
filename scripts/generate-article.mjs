@@ -36,6 +36,8 @@ const bodyOf = (slug) => {
 };
 // مقال "منجز" = موجود وطوله كافٍ
 const done = new Set(articles.filter((a) => words(bodyOf(a.slug).content) >= MIN_WORDS).map((a) => a.slug));
+// مقالات تنتظر الموافقة: لا نكتب الموضوع نفسه مرتين
+for (const x of (process.env.SKIP_SLUGS || "").split(",")) if (x) done.add(x);
 const allKnownSlugs = () => new Set([...articles.map((a) => a.slug), ...TOPICS.new.map((t) => t.slug), ...TOPICS.expand]);
 const allKnownTitles = () => [...articles.map((a) => a.title), ...TOPICS.new.map((t) => t.keyword)];
 const slugify = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 70);
@@ -128,6 +130,19 @@ Return JSON: {"topics": [{"slug": "short-english-kebab-case-slug", "keyword": "�
   }
   fs.writeFileSync(TOPICS_FILE, JSON.stringify(TOPICS, null, 2) + "\n");
   console.log(`🧠 أُضيف ${added} موضوع جديد إلى القائمة`);
+}
+
+/** موضوع طلبه صاحب الموقع: نستخرج له رابطاً إنجليزياً غير مكرر. */
+async function customTask(topic) {
+  const res = await chat([
+    { role: "system", content: "You prepare article topics. Return JSON only." },
+    { role: "user", content: `Requested article topic: "${topic}".
+Return JSON: {"slug": "short-english-kebab-case-slug", "keyword": "the same topic written in Arabic", "category": "one of: ${CATEGORIES.join(", ")}"}` },
+  ]);
+  const known = allKnownSlugs();
+  let slug = slugify(res.slug || "") || `article-${Date.now()}`;
+  while (known.has(slug) || done.has(slug)) slug += "-new";
+  return { kind: "custom", slug, keyword: String(res.keyword || "").trim() || topic, category: CATEGORIES.includes(res.category) ? res.category : "tech" };
 }
 
 function nextTask() {
@@ -239,7 +254,7 @@ for (let i = 0; i < COUNT; i++) {
   } catch (e) {
     console.warn("تعذّر اقتراح مواضيع جديدة الآن:", String(e.message).slice(0, 120));
   }
-  const task = nextTask();
+  const task = process.env.TOPIC ? await customTask(process.env.TOPIC) : nextTask();
   if (!task) {
     console.log("لا توجد مواضيع متبقية.");
     break;
@@ -294,7 +309,7 @@ for (let i = 0; i < COUNT; i++) {
     if (task.kind === "new") {
       const t = TOPICS.new.splice(TOPICS.new.findIndex((x) => x.slug === task.slug), 1)[0];
       TOPICS.new.push(t);
-    } else {
+    } else if (task.kind === "expand") {
       TOPICS.expand.push(TOPICS.expand.splice(TOPICS.expand.indexOf(task.slug), 1)[0]);
     }
     fs.writeFileSync(TOPICS_FILE, JSON.stringify(TOPICS, null, 2) + "\n");
