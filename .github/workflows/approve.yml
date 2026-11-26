@@ -74,4 +74,4 @@ jobs:
             [ "$code" = "200" ] && break
             sleep 30
           done
-          npm run indexnow -- "/post/$SLUG" /posts /
+          npm run indexnow -- "/post/$SLUG" "/ar/post/$SLUG" /posts / /ar/posts /ar

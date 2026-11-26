@@ -10,7 +10,7 @@ import AdSpace from "../components/AdSpace";
 
 export default function HomeView() {
   const { lang, en, to, t } = useLang();
-  useSeo({ ...staticPage("/", lang), path: to("/"), lang, alternates: { ar: "/", en: "/en" } });
+  useSeo({ ...staticPage("/", lang), path: to("/"), lang, alternates: { ar: "/ar", en: "/" } });
   const latest = articlesIn(ARTICLES, lang).slice(0, 12);
   const Arrow = en ? ArrowRight : ArrowLeft;
   return (

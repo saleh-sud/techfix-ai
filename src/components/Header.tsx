@@ -78,7 +78,14 @@ export default function Header({ isDarkMode, onThemeToggle }: { isDarkMode: bool
             to={otherPath}
             lang={en ? "ar" : "en"}
             hrefLang={en ? "ar" : "en"}
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              try {
+                localStorage.setItem("techfix_lang", en ? "ar" : "en");
+              } catch {
+                /* ignore */
+              }
+            }}
             className="flex items-center gap-1 p-2 rounded-xl text-xs font-extrabold bg-gray-100 dark:bg-slate-900 text-gray-700 dark:text-gray-200 hover:text-brand-blue"
           >
             <Languages className="w-4 h-4" aria-hidden="true" />

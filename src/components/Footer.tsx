@@ -52,7 +52,7 @@ export default function Footer() {
             <li><Link to={to("/privacy")} className={a}>{t("سياسة الخصوصية", "Privacy Policy")}</Link></li>
             <li><Link to={to("/terms")} className={a}>{t("شروط الاستخدام", "Terms of Use")}</Link></li>
             <li><Link to={to("/disclaimer")} className={a}>{t("إخلاء المسؤولية", "Disclaimer")}</Link></li>
-            <li><a href="/rss.xml" className={a}>{t("خلاصة RSS", "RSS feed (Arabic)")}</a></li>
+            <li><a href="/rss.xml" className={a}>{t("خلاصة RSS (بالإنجليزية)", "RSS feed")}</a></li>
             <li><a href="https://jobtools-cv-generator.web.app/" className={a}>{t("أدوات الوظائف: سيرة ذاتية مجاناً", "Job tools: free CV maker")}</a></li>
           </ul>
         </div>

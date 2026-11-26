@@ -7,7 +7,7 @@ import { useSeo } from "../seo/useSeo";
 
 export default function CategoriesView() {
   const { lang, en, to, t } = useLang();
-  useSeo({ ...staticPage("/categories", lang), path: to("/categories"), lang, alternates: { ar: "/categories", en: "/en/categories" } });
+  useSeo({ ...staticPage("/categories", lang), path: to("/categories"), lang, alternates: { ar: "/ar/categories", en: "/categories" } });
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-black">{t("أقسام الموقع", "Categories")}</h1>

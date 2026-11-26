@@ -21,7 +21,7 @@ export default function ListView() {
   const base = cat ? `/category/${cat.id}` : "/posts";
   const path = page === 1 ? base : `${base}/page/${page}`;
   const bothLangs = page <= Math.max(1, Math.ceil(articlesIn(inScope, "en").length / PAGE_SIZE));
-  useSeo({ ...listMeta(lang, cat?.id, page), path: to(path), lang, alternates: bothLangs ? { ar: path, en: localPath(path, "en") } : undefined });
+  useSeo({ ...listMeta(lang, cat?.id, page), path: to(path), lang, alternates: bothLangs ? { ar: localPath(path, "ar"), en: path } : undefined });
 
   if ((category && !cat) || page > total) return <NotFoundView />;
   return (

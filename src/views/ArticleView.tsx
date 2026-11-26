@@ -8,7 +8,7 @@ import { useSeo } from "../seo/useSeo";
 import type { ArticleBody } from "../types";
 import AdSpace from "../components/AdSpace";
 import NotFoundView from "./NotFoundView";
-import { useLang } from "../lib/lang";
+import { localPath, useLang } from "../lib/lang";
 import { articlesIn } from "../seo/routes";
 
 function Block({ b }: { b: ArticleBlock }) {
@@ -54,7 +54,7 @@ export default function ArticleView() {
   }, [slug]);
 
   const blocks = useMemo(() => parseArticle((en ? body?.contentEn : body?.content) || ""), [body, en]);
-  const alternates = meta?.hasEn ? { ar: `/post/${slug}`, en: `/en/post/${slug}` } : undefined;
+  const alternates = meta?.hasEn ? { ar: `/ar/post/${slug}`, en: `/post/${slug}` } : undefined;
   useSeo({
     title: `${(en ? meta?.titleEn : meta?.title) || "مقال"} | TechFix AI`,
     description: (en ? meta?.summaryEn : meta?.summary) || "",
@@ -96,7 +96,7 @@ export default function ArticleView() {
               <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /><time dateTime={meta.date}>{meta.date}</time></span>
               <span className="flex items-center gap-1"><Clock className="w-4 h-4" />{en ? `${parseInt(meta.readTime, 10) || 5} min read` : meta.readTime}</span>
               {meta.hasEn && (
-                <Link to={en ? `/post/${slug}` : `/en/post/${slug}`} className="ms-auto font-bold text-brand-blue">
+                <Link to={localPath(`/post/${slug}`, en ? "ar" : "en")} className="ms-auto font-bold text-brand-blue">
                   {en ? "اقرأ بالعربية" : "Read in English"}
                 </Link>
               )}

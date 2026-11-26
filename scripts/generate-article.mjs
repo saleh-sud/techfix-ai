@@ -245,12 +245,18 @@ for (let i = 0; i < COUNT; i++) {
       if (w >= MIN_WORDS) break;
       if (tries === 2) throw new Error(`المقال قصير جداً (${w} كلمة) — لم يُحفظ.`);
     }
-    let en = { titleEn: "", summaryEn: "", contentEn: "" };
-    try {
-      en = await writeEnglish(ar);
-      console.log(`   الإنجليزي: ${words(en.contentEn)} كلمة`);
-    } catch (e) {
-      console.warn("   تعذّرت النسخة الإنجليزية:", String(e.message).slice(0, 120));
+    // الإنجليزية هي لغة الموقع الأساسية: بدونها لا يُحفظ المقال (محاولتان)
+    let en;
+    for (let tries = 1; ; tries++) {
+      try {
+        en = await writeEnglish(ar);
+        console.log(`   الإنجليزي: ${words(en.contentEn)} كلمة`);
+        if (words(en.contentEn) >= 300 && en.titleEn) break;
+        throw new Error("النسخة الإنجليزية ناقصة");
+      } catch (e) {
+        if (tries === 2) throw e;
+        console.warn("   إعادة محاولة النسخة الإنجليزية:", String(e.message).slice(0, 120));
+      }
     }
     const w = words(ar.content);
     const meta = {
@@ -262,7 +268,7 @@ for (let i = 0; i < COUNT; i++) {
       category: CATEGORIES.includes(task.category) ? task.category : "tech",
       readTime: `${Math.max(4, Math.round(w / 200))} دقائق`,
       date: today,
-      hasEn: words(en.contentEn) >= 300 && !!en.titleEn,
+      hasEn: true,
     };
     fs.writeFileSync(path.join(CONTENT_DIR, `${task.slug}.json`), JSON.stringify({ content: ar.content.trim(), contentEn: String(en.contentEn || "").trim() }, null, 2) + "\n");
     const idx = articles.findIndex((a) => a.slug === task.slug);
@@ -270,7 +276,7 @@ for (let i = 0; i < COUNT; i++) {
     else articles.push(meta);
     done.add(task.slug);
     newUrls.push(`/post/${task.slug}`);
-    if (meta.hasEn) newUrls.push(`/en/post/${task.slug}`);
+    newUrls.push(`/ar/post/${task.slug}`);
     fs.writeFileSync(META_FILE, JSON.stringify(articles, null, 2) + "\n");
     console.log(`   ✅ حُفظ: ${meta.title}`);
   } catch (e) {

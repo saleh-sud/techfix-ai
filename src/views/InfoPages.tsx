@@ -10,7 +10,7 @@ const UPDATED = "2026-11-22";
 
 function Page({ path, heading, children }: { path: string; heading: string; children: ReactNode }) {
   const { lang, to } = useLang();
-  useSeo({ ...staticPage(path, lang), path: to(path), lang, alternates: { ar: path, en: `/en${path}` } });
+  useSeo({ ...staticPage(path, lang), path: to(path), lang, alternates: { ar: `/ar${path}`, en: path } });
   return (
     <article className="max-w-3xl mx-auto bg-white dark:bg-slate-950 p-6 md:p-10 rounded-3xl border border-gray-200 dark:border-slate-800 text-sm leading-loose text-gray-700 dark:text-gray-300 space-y-4 info-page">
       <h1 className="text-2xl font-black text-gray-900 dark:text-white">{heading}</h1>
@@ -140,7 +140,7 @@ export function TermsView() {
       <H>الإعلانات والروابط</H>
       <p>
         يعرض الموقع إعلانات من أطراف ثالثة وروابط خارجية. تعاملك مع أي معلن أو موقع خارجي يخضع لشروطه هو، ولسنا طرفاً فيه. انظر أيضاً{" "}
-        <Link to="/disclaimer" className="text-brand-blue">إخلاء المسؤولية</Link> و<Link to="/privacy" className="text-brand-blue">سياسة الخصوصية</Link>.
+        <Link to="/ar/disclaimer" className="text-brand-blue">إخلاء المسؤولية</Link> و<Link to="/ar/privacy" className="text-brand-blue">سياسة الخصوصية</Link>.
       </p>
       <H>تحديد المسؤولية</H>
       <p>لا يتحمّل الموقع أي مسؤولية عن خسارة بيانات أو تلف أجهزة أو أضرار مباشرة أو غير مباشرة ناتجة عن استخدام المحتوى.</p>
@@ -288,8 +288,8 @@ function TermsEn() {
       <H>Ads and links</H>
       <p>
         The site shows third-party ads and external links. Your dealings with any advertiser or external site are governed by their own terms, and we
-        are not a party to them. See also our <Link to="/en/disclaimer" className="text-brand-blue">Disclaimer</Link> and{" "}
-        <Link to="/en/privacy" className="text-brand-blue">Privacy Policy</Link>.
+        are not a party to them. See also our <Link to="/disclaimer" className="text-brand-blue">Disclaimer</Link> and{" "}
+        <Link to="/privacy" className="text-brand-blue">Privacy Policy</Link>.
       </p>
       <H>Limitation of liability</H>
       <p>The site accepts no liability for data loss, device damage, or direct or indirect harm resulting from use of the content.</p>

@@ -89,12 +89,12 @@ const slice = (items: ArticleMeta[], p: number) => items.slice((p - 1) * PAGE_SI
 
 export function getAllRoutes(): RouteMeta[] {
   const routes: RouteMeta[] = [];
-  for (const lang of ["ar", "en"] as Lang[]) {
+  for (const lang of ["en", "ar"] as Lang[]) {
     const all = articlesIn(ARTICLES, lang);
     const today = all[0]?.date;
     // hreflang: فقط عندما توجد الصفحة باللغتين
     const alt = (path: string, page = 1, items = ARTICLES) =>
-      page <= pages(articlesIn(items, "en")) ? { ar: path, en: localPath(path, "en") } : undefined;
+      page <= pages(articlesIn(items, "en")) ? { ar: localPath(path, "ar"), en: path } : undefined;
     for (const path of Object.keys(STATIC_PAGES)) {
       routes.push({
         path: localPath(path, lang),
@@ -142,8 +142,8 @@ export function getAllRoutes(): RouteMeta[] {
     }
   }
   for (const a of ARTICLES) {
-    const alternates = a.hasEn ? { ar: `/post/${a.slug}`, en: `/en/post/${a.slug}` } : undefined;
-    for (const lang of (a.hasEn ? ["ar", "en"] : ["ar"]) as Lang[])
+    const alternates = a.hasEn ? { ar: `/ar/post/${a.slug}`, en: `/post/${a.slug}` } : undefined;
+    for (const lang of (a.hasEn ? ["en", "ar"] : ["ar"]) as Lang[])
       routes.push({
         path: localPath(`/post/${a.slug}`, lang),
         lang,
@@ -151,7 +151,7 @@ export function getAllRoutes(): RouteMeta[] {
         description: lang === "en" ? a.summaryEn : a.summary,
         lastmod: a.date,
         changefreq: "monthly",
-        priority: lang === "en" ? "0.6" : "0.8",
+        priority: lang === "en" ? "0.8" : "0.7",
         article: a,
         articleLang: lang,
         alternates,

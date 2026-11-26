@@ -2,14 +2,14 @@ import { useLocation } from "react-router-dom";
 
 export type Lang = "ar" | "en";
 
-/** اللغة تُحدَّد من الرابط: كل ما يبدأ بـ /en إنجليزي (حتى يكون لكل لغة صفحاتها المفهرسة). */
-export const langOf = (pathname: string): Lang => (pathname === "/en" || pathname.startsWith("/en/") ? "en" : "ar");
+/** الإنجليزية هي الأساسية (بدون بادئة)، وكل ما يبدأ بـ /ar عربي (لكل لغة صفحاتها المفهرسة). */
+export const langOf = (pathname: string): Lang => (pathname === "/ar" || pathname.startsWith("/ar/") ? "ar" : "en");
 
-/** يحوّل مساراً عربياً (/posts) لنظيره باللغة المطلوبة (/en/posts). */
-export const localPath = (path: string, lang: Lang) => (lang === "en" ? (path === "/" ? "/en" : `/en${path}`) : path);
+/** يحوّل المسار الأساسي (/posts) لنظيره باللغة المطلوبة (/ar/posts للعربية). */
+export const localPath = (path: string, lang: Lang) => (lang === "ar" ? (path === "/" ? "/ar" : `/ar${path}`) : path);
 
 /** المسار بدون بادئة اللغة */
-export const basePath = (pathname: string) => (langOf(pathname) === "en" ? pathname.slice(3) || "/" : pathname);
+export const basePath = (pathname: string) => (langOf(pathname) === "ar" ? pathname.slice(3) || "/" : pathname);
 
 export function useLang() {
   const { pathname } = useLocation();

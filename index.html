@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,8 +21,8 @@
     <!--preload-->
 
     <!-- seo:start (يُستبدل لكل صفحة أثناء البناء عبر scripts/postbuild.mjs) -->
-    <title>TechFix AI | حلول تقنية وشروحات أندرويد وويندوز والذكاء الاصطناعي</title>
-    <meta name="description" content="موقع عربي لحلول المشاكل التقنية خطوة بخطوة: أندرويد، ويندوز، آيفون، الإنترنت، الأمان، والذكاء الاصطناعي." />
+    <title>TechFix AI | Tech Fixes and Guides for Android, Windows and AI</title>
+    <meta name="description" content="Step-by-step fixes for everyday tech problems: Android, Windows, iPhone, internet, security and AI." />
     <meta name="robots" content="index, follow" />
     <meta property="og:title" content="TechFix AI" />
     <meta property="og:type" content="website" />
@@ -30,6 +30,8 @@
     <!-- seo:end -->
 
     <script>
+      // من اختار العربية سابقاً يُفتح له الموقع بالعربية (الافتراضي للجميع: الإنجليزية)
+      try { if (location.pathname === "/" && localStorage.getItem("techfix_lang") === "ar") location.replace("/ar"); } catch (e) {}
       // الوضع الليلي قبل الرسم (بدون وميض)
       try { if (localStorage.getItem("techfix_dark_mode") === "true") document.documentElement.classList.add("dark"); } catch (e) {}
       // Google Analytics + الإعلانات: تُحمَّل بعد أول تفاعل للزائر (أو بعد 20 ثانية) حتى تبقى الصفحة سريعة جداً
@@ -59,12 +61,12 @@
   <body>
     <div id="root"><!--prerender--></div>
     <!-- A-ADS: وحدتان ثابتتان في HTML (خارج React) حتى يتحقق منهما روبوت A-ADS بدون JavaScript -->
-    <aside class="aads-static" aria-label="إعلانات">
+    <aside class="aads-static" aria-label="Advertisements">
       <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-        <iframe data-aa='2462899' title="إعلان A-ADS" loading="lazy" src='https://acceptable.a-ads.com/2462899/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+        <iframe data-aa='2462899' title="A-ADS ad" loading="lazy" src='https://acceptable.a-ads.com/2462899/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
       </div>
       <div id="frame-m" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-        <iframe data-aa='2462900' title="إعلان A-ADS" loading="lazy" src='https://acceptable.a-ads.com/2462900/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+        <iframe data-aa='2462900' title="A-ADS ad" loading="lazy" src='https://acceptable.a-ads.com/2462900/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
       </div>
     </aside>
     <script type="module" src="/src/main.tsx"></script>

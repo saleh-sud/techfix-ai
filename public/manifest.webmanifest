@@ -1,9 +1,9 @@
 {
   "name": "TechFix AI",
   "short_name": "TechFix",
-  "description": "حلول تقنية وشروحات خطوة بخطوة",
-  "lang": "ar",
-  "dir": "rtl",
+  "description": "Tech fixes and step-by-step guides",
+  "lang": "en",
+  "dir": "ltr",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F8FAFC",

@@ -20,7 +20,7 @@ const tmp = path.join(ROOT, "node_modules", ".cache-routes.mjs");
 await build({ entryPoints: [path.join(ROOT, "src/seo/routes.ts")], bundle: true, format: "esm", platform: "node", outfile: tmp, logLevel: "silent" });
 const R = await import(`${pathToFileURL(tmp).href}?v=${Date.now()}`);
 fs.rmSync(tmp, { force: true });
-const { getAllRoutes, NOT_FOUND_META, parseArticle, blocksToHtml, relatedArticles, articleJsonLd, sourcesFor, tocOf, esc, ARTICLES, CATEGORIES } = R;
+const { getAllRoutes, NOT_FOUND_META_EN, parseArticle, blocksToHtml, relatedArticles, articleJsonLd, sourcesFor, tocOf, esc, ARTICLES, CATEGORIES } = R;
 const catName = (id) => CATEGORIES.find((c) => c.id === id) || CATEGORIES[CATEGORIES.length - 1];
 
 const loadBody = (slug) => {
@@ -68,16 +68,16 @@ fs.writeFileSync(
 );
 
 const rssItems = articleRoutes
-  .filter((r) => r.articleLang === "ar")
+  .filter((r) => r.articleLang === "en")
   .slice(0, 50)
   .map(
     (r) => `    <item>
-      <title>${esc(r.article.title)}</title>
+      <title>${esc(r.article.titleEn)}</title>
       <link>${esc(urlOf(r.path))}</link>
       <guid isPermaLink="true">${esc(urlOf(r.path))}</guid>
       <pubDate>${new Date(`${r.article.date}T08:00:00Z`).toUTCString()}</pubDate>
-      <category>${esc(catName(r.article.category).name)}</category>
-      <description>${esc(r.article.summary)}</description>
+      <category>${esc(catName(r.article.category).nameEn)}</category>
+      <description>${esc(r.article.summaryEn)}</description>
     </item>`
   )
   .join("\n");
@@ -90,7 +90,7 @@ fs.writeFileSync(
     <link>${SITE_URL}/</link>
     <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
     <description>${esc(config.tagline)}</description>
-    <language>ar</language>
+    <language>en</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
 ${rssItems}
   </channel>
@@ -101,7 +101,7 @@ ${rssItems}
 if (config.indexNowKey) fs.writeFileSync(path.join(DIST, `${config.indexNowKey}.txt`), config.indexNowKey);
 fs.writeFileSync(
   path.join(DIST, "robots.txt"),
-  `User-agent: *\nAllow: /\nDisallow: /search\nDisallow: /en/search\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/rss.xml\n`
+  `User-agent: *\nAllow: /\nDisallow: /search\nDisallow: /ar/search\n\nSitemap: ${SITE_URL}/sitemap.xml\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/rss.xml\n`
 );
 // ملف ads.txt (إن وُجد) يُنسخ من public تلقائياً عبر vite
 
@@ -111,14 +111,14 @@ const ld = (obj) => `<script type="application/ld+json">${JSON.stringify(obj).re
 const image = SITE_URL + config.ogImage;
 
 const jsonLd = (r) => {
-  if (r.path === "/" || r.path === "/en")
+  if (r.path === "/" || r.path === "/ar")
     return ld({
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: NAME,
       url: urlOf(r.path),
       inLanguage: r.lang,
-      potentialAction: { "@type": "SearchAction", target: `${SITE_URL}${r.lang === "en" ? "/en" : ""}/search?q={q}`, "query-input": "required name=q" },
+      potentialAction: { "@type": "SearchAction", target: `${SITE_URL}${r.lang === "ar" ? "/ar" : ""}/search?q={q}`, "query-input": "required name=q" },
     }) + ld({ "@context": "https://schema.org", "@type": "Organization", name: NAME, url: `${SITE_URL}/`, logo: `${SITE_URL}/favicon.svg`, email: config.contactEmail });
   if (r.article) return articleJsonLd(r.article, SITE_URL, NAME, image, r.articleLang).map(ld).join("");
   if (r.listing) return ld({ "@context": "https://schema.org", "@type": "CollectionPage", name: r.title, url: urlOf(r.path) });
@@ -147,7 +147,7 @@ function render(r, { noindex = false } = {}) {
         ? `
     <link rel="alternate" hreflang="ar" href="${urlOf(r.alternates.ar)}" />
     <link rel="alternate" hreflang="en" href="${urlOf(r.alternates.en)}" />
-    <link rel="alternate" hreflang="x-default" href="${urlOf(r.alternates.ar)}" />`
+    <link rel="alternate" hreflang="x-default" href="${urlOf(r.alternates.en)}" />`
         : ""
     }
     <meta property="og:site_name" content="${esc(NAME)}" />
@@ -175,9 +175,9 @@ function render(r, { noindex = false } = {}) {
   const preload = art ? `<script>window.__TF_ARTICLE__=${JSON.stringify(art).replace(/</g, String.fromCharCode(92) + "u003c")}</script>` : "";
   return baseTemplate
     .replace(/<!-- seo:start[\s\S]*?<!-- seo:end -->/, head)
-    .replace('<html lang="ar" dir="rtl">', `<html lang="${r.lang}" dir="${r.lang === "en" ? "ltr" : "rtl"}">`)
-    .replace('aria-label="إعلانات"', r.lang === "en" ? 'aria-label="Advertisements"' : 'aria-label="إعلانات"')
-    .replace(/title="إعلان A-ADS"/g, r.lang === "en" ? 'title="A-ADS ad"' : 'title="إعلان A-ADS"')
+    .replace('<html lang="en" dir="ltr">', `<html lang="${r.lang}" dir="${r.lang === "en" ? "ltr" : "rtl"}">`)
+    .replace('aria-label="Advertisements"', r.lang === "ar" ? 'aria-label="إعلانات"' : 'aria-label="Advertisements"')
+    .replace(/title="A-ADS ad"/g, r.lang === "ar" ? 'title="إعلان A-ADS"' : 'title="A-ADS ad"')
     .replace('<div id="root"><!--prerender--></div>', `<div id="root">${html}</div>${preload}`);
 }
 
@@ -189,7 +189,7 @@ for (const r of routes) {
   fs.writeFileSync(out, render(r));
   count++;
 }
-fs.writeFileSync(path.join(DIST, "404.html"), render({ ...NOT_FOUND_META, path: "/404", lang: "ar", changefreq: "", priority: "" }, { noindex: true }));
+fs.writeFileSync(path.join(DIST, "404.html"), render({ ...NOT_FOUND_META_EN, path: "/404", lang: "en", changefreq: "", priority: "" }, { noindex: true }));
 
 const files = (d) => fs.readdirSync(d, { withFileTypes: true }).reduce((n, e) => n + (e.isDirectory() ? files(path.join(d, e.name)) : 1), 0);
 fs.rmSync(path.join(ROOT, "dist-ssr"), { recursive: true, force: true });

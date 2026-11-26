@@ -34,7 +34,7 @@ function setLink(rel: string, href: string, hreflang?: string) {
 }
 
 /** يحدّث title / description / canonical / Open Graph عند التنقل داخل الموقع (HTML الثابت يحملها أصلاً). */
-export function useSeo({ title, description, path, type = "website", lang = "ar", noindex, alternates }: SeoOptions) {
+export function useSeo({ title, description, path, type = "website", lang = "en", noindex, alternates }: SeoOptions) {
   useEffect(() => {
     const url = `${SITE_URL}${path === "/" ? "/" : path}`;
     document.title = title;
@@ -55,7 +55,7 @@ export function useSeo({ title, description, path, type = "website", lang = "ar"
     if (alternates) {
       setLink("alternate", SITE_URL + alternates.ar, "ar");
       setLink("alternate", SITE_URL + alternates.en, "en");
-      setLink("alternate", SITE_URL + alternates.ar, "x-default");
+      setLink("alternate", SITE_URL + alternates.en, "x-default");
     }
   }, [title, description, path, type, lang, noindex, alternates?.ar, alternates?.en]);
 }

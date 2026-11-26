@@ -182,9 +182,9 @@ const GENERAL = [
 ];
 export const sourcesFor = (category: string) => [...(SOURCES[category] || []), ...GENERAL].slice(0, 4);
 
-export function articleJsonLd(a: Article, siteUrl: string, siteName: string, image: string, lang: "ar" | "en" = "ar") {
+export function articleJsonLd(a: Article, siteUrl: string, siteName: string, image: string, lang: "ar" | "en" = "en") {
   const en = lang === "en";
-  const url = `${siteUrl}${en ? "/en" : ""}/post/${a.slug}`;
+  const url = `${siteUrl}${en ? "" : "/ar"}/post/${a.slug}`;
   const content = (en ? a.contentEn : a.content) || "";
   const faq = faqOf(content);
   const out: object[] = [
@@ -207,8 +207,8 @@ export function articleJsonLd(a: Article, siteUrl: string, siteName: string, ima
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: siteName, item: `${siteUrl}${en ? "/en" : "/"}` },
-        { "@type": "ListItem", position: 2, name: en ? "Articles" : "المقالات", item: `${siteUrl}${en ? "/en" : ""}/posts` },
+        { "@type": "ListItem", position: 1, name: siteName, item: `${siteUrl}${en ? "/" : "/ar"}` },
+        { "@type": "ListItem", position: 2, name: en ? "Articles" : "المقالات", item: `${siteUrl}${en ? "" : "/ar"}/posts` },
         { "@type": "ListItem", position: 3, name: en ? a.titleEn : a.title, item: url },
       ],
     },

@@ -16,7 +16,7 @@ const app = (
 
 // الصفحات منشورة مسبقاً بالـ HTML الكامل (SSR) => hydrate بدل إعادة الرسم
 // startTransition يقسّم الـ hydration لمهام صغيرة (لا يحجب الصفحة => TBT قريب من الصفر)
-// نرسم من جديد بدل hydrate عندما يختلف الـ HTML المنشور: صفحة 404 العربية تحت /en، أو البحث برابط فيه كلمة
+// نرسم من جديد بدل hydrate عندما يختلف الـ HTML المنشور: صفحة 404 الإنجليزية تحت /ar، أو البحث برابط فيه كلمة
 const samePage =
   document.documentElement.lang === langOf(window.location.pathname) && !(window.location.pathname.endsWith("/search") && window.location.search);
 if (root.firstElementChild && samePage) startTransition(() => void hydrateRoot(root, app));

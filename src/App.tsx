@@ -41,8 +41,8 @@ export default function App() {
       <Header isDarkMode={dark} onThemeToggle={toggleDark} />
       <main className="flex-grow max-w-7xl w-full mx-auto px-4 md:px-8 py-8 md:py-12">
         <Routes>
-          {["", "/en"].map((p) => (
-            <Fragment key={p || "ar"}>
+          {["", "/ar"].map((p) => (
+            <Fragment key={p || "en"}>
               <Route path={p || "/"} element={<HomeView />} />
               <Route path={`${p}/posts`} element={<ListView />} />
               <Route path={`${p}/posts/page/:page`} element={<ListView />} />
