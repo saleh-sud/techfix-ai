@@ -1,0 +1,77 @@
+# النشر بعد موافقة صاحب المستودع: ردّه على إيميل طلب المقال بكلمة «انشر» أو «لا».
+name: Article approval
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: articles
+  cancel-in-progress: false
+
+jobs:
+  decide:
+    # فقط ردّ صاحب المستودع، وفقط على طلب مقال
+    if: github.event.issue.pull_request && github.event.comment.user.login == github.repository_owner && startsWith(github.event.issue.title, 'مقال بانتظار موافقتك')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PR: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Act on the reply
+        id: act
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENT: ${{ github.event.comment.body }}
+        run: |
+          state=$(gh pr view "$PR" --json state --jq .state)
+          [ "$state" = "OPEN" ] || { echo "already closed"; exit 0; }
+          branch=$(gh pr view "$PR" --json headRefName --jq .headRefName)
+          case "$branch" in article/*) ;; *) echo "not an article branch"; exit 0;; esac
+          slug=$(echo "${branch#article/}" | sed -E 's/-[0-9]+$//')
+          case "$slug" in *[!a-z0-9-]*|"") echo "unexpected slug"; exit 1;; esac
+          echo "SLUG=$slug" >> "$GITHUB_ENV"
+          answer=$(node scripts/approval.mjs decide)
+          if [ "$answer" = "publish" ]; then
+            gh pr merge "$PR" --squash --delete-branch
+            git pull --ff-only origin main
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            gh pr comment "$PR" --body "تم قبول المقال، وهو يُنشر الآن."
+          elif [ "$answer" = "reject" ]; then
+            gh pr close "$PR" --delete-branch --comment "لن يُنشر هذا المقال."
+            node scripts/approval.mjs drop "$slug"
+            git config user.name "articles-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add scripts/article-topics.json
+            git diff --cached --quiet || { git commit -m "Rejected topic: $slug" && git push origin HEAD:main; }
+          else
+            gh pr comment "$PR" --body "لم أفهم الرد. اكتب في أول سطر: انشر، أو: لا"
+          fi
+
+      - uses: actions/setup-node@v5
+        if: steps.act.outputs.published == 'true'
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Wait for Cloudflare Pages, then ping IndexNow
+        if: steps.act.outputs.published == 'true'
+        run: |
+          npm ci
+          SITE=$(node -p "require('./site.config.json').siteUrl")
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$SITE/post/$SLUG")
+            echo "try $i: $code"
+            [ "$code" = "200" ] && break
+            sleep 30
+          done
+          npm run indexnow -- "/post/$SLUG" /posts /

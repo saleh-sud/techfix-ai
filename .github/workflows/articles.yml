@@ -14,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: articles
@@ -33,43 +34,42 @@ jobs:
 
       - run: npm ci
 
-      - name: Write article(s)
+      # مقال واحد ينتظر موافقتك في كل مرة: لا نكتب غيره قبل أن تردّ عليه.
+      - name: Is an article waiting for approval?
+        id: pending
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=$(gh pr list --state open --limit 50 --json headRefName --jq '[.[] | select(.headRefName | startswith("article/"))] | length')
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+          [ "$n" = "0" ] || echo "::notice::An article is still waiting for approval. Nothing new is written."
+
+      - name: Write article
+        if: steps.pending.outputs.count == '0'
         id: gen
         timeout-minutes: 60
-        run: node scripts/generate-article.mjs --count "${{ github.event.inputs.count || '1' }}"
+        run: node scripts/generate-article.mjs --count 1
 
-      - name: Build (تأكد أن الموقع يبنى قبل النشر)
+      - name: Build (تأكد أن الموقع يبنى قبل طلب الموافقة)
+        if: steps.pending.outputs.count == '0' && steps.gen.outputs.new_urls != ''
         run: npm run build
 
-      - name: Commit & push
-        id: push
+      - name: Ask for approval (email with the article)
+        if: steps.pending.outputs.count == '0' && steps.gen.outputs.new_urls != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW_URLS: ${{ steps.gen.outputs.new_urls }}
+          OWNER: ${{ github.repository_owner }}
         run: |
-          git add src/data/articles.json src/content/articles scripts/article-topics.json
-          if git diff --cached --quiet; then
-            echo "No new article"; exit 0
-          fi
+          slug=$(echo "$NEW_URLS" | cut -d' ' -f1 | awk -F/ '{print $NF}')
+          case "$slug" in *[!a-z0-9-]*|"") echo "unexpected slug"; exit 1;; esac
+          branch="article/$slug-${{ github.run_id }}"
           git config user.name "articles-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Add article(s): ${{ steps.gen.outputs.new_urls }}"
-          for i in 1 2 3; do
-            git pull --rebase origin main && git push origin HEAD:main && echo "pushed=true" >> "$GITHUB_OUTPUT" && exit 0
-            sleep 10
-          done
-          exit 1
-
-      - name: Wait for Cloudflare Pages deploy
-        if: steps.push.outputs.pushed == 'true' && steps.gen.outputs.new_urls != ''
-        run: |
-          SITE=$(node -p "require('./site.config.json').siteUrl")
-          FIRST=$(echo "${{ steps.gen.outputs.new_urls }}" | cut -d' ' -f1)
-          for i in $(seq 1 40); do
-            code=$(curl -s -o /dev/null -w "%{http_code}" "$SITE$FIRST")
-            echo "try $i: $code"
-            [ "$code" = "200" ] && exit 0
-            sleep 30
-          done
-          echo "::warning::Page not live yet after 20 min"
-
-      - name: Ping IndexNow (Bing / Yandex)
-        if: steps.push.outputs.pushed == 'true' && steps.gen.outputs.new_urls != ''
-        run: npm run indexnow -- ${{ steps.gen.outputs.new_urls }} /posts / /en/posts /en
+          git checkout -b "$branch"
+          git add src/data/articles.json src/content/articles scripts/article-topics.json
+          git commit -m "Article for approval: $slug"
+          git push origin "$branch"
+          node scripts/approval.mjs body "$slug" > /tmp/body.md
+          title=$(node -p "(require('./src/data/articles.json').find(a=>a.slug==='$slug')||{}).title || '$slug'")
+          gh pr create --base main --head "$branch" --title "مقال بانتظار موافقتك: $title" --body-file /tmp/body.md --assignee "$OWNER"
