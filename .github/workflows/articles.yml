@@ -1,4 +1,4 @@
-# عامل المقالات: 3 مرات باليوم، مقال (~1000 كلمة عربي + نسخة إنجليزية) عبر Pollinations.ai المجاني بدون مفتاح.
+# عامل المقالات: مرتين باليوم، مقال (~1000 كلمة عربي + نسخة إنجليزية) عبر Pollinations.ai المجاني بدون مفتاح.
 # بعد الـ push، Cloudflare Pages يبني وينشر لحاله (Git integration)، وبعدها نبلّغ IndexNow (Bing / Yandex).
 name: Daily articles
 
@@ -6,7 +6,6 @@ on:
   schedule:
     - cron: "0 5 * * *"   # 08:00 بتوقيت دمشق/السعودية
     - cron: "0 11 * * *"  # 14:00
-    - cron: "0 17 * * *"  # 20:00
   workflow_dispatch:
     inputs:
       count:
