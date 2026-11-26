@@ -32,11 +32,6 @@
       "category": "windows"
     },
     {
-      "slug": "windows-100-percent-disk-usage",
-      "keyword": "حل مشكلة استهلاك القرص 100% في ويندوز",
-      "category": "windows"
-    },
-    {
       "slug": "laptop-not-charging-fix",
       "keyword": "حل مشكلة اللابتوب لا يشحن رغم توصيل الشاحن",
       "category": "windows"
@@ -289,6 +284,11 @@
     {
       "slug": "windows-no-sound-fix",
       "keyword": "حل مشكلة اختفاء الصوت في ويندوز 10 و11",
+      "category": "windows"
+    },
+    {
+      "slug": "windows-100-percent-disk-usage",
+      "keyword": "حل مشكلة استهلاك القرص 100% في ويندوز",
       "category": "windows"
     }
   ]
