@@ -32,11 +32,6 @@
       "category": "windows"
     },
     {
-      "slug": "windows-update-stuck-fix",
-      "keyword": "حل مشكلة توقف تحديثات ويندوز وفشل التثبيت",
-      "category": "windows"
-    },
-    {
       "slug": "windows-no-sound-fix",
       "keyword": "حل مشكلة اختفاء الصوت في ويندوز 10 و11",
       "category": "windows"
@@ -289,6 +284,11 @@
     {
       "slug": "windows-11-slow-fix",
       "keyword": "تسريع ويندوز 11 وحل مشكلة البطء خطوة بخطوة",
+      "category": "windows"
+    },
+    {
+      "slug": "windows-update-stuck-fix",
+      "keyword": "حل مشكلة توقف تحديثات ويندوز وفشل التثبيت",
       "category": "windows"
     }
   ]
