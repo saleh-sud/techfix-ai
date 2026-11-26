@@ -1,295 +1,155 @@
 {
-  "expand": [
-    "use-chat-gpt-daily-productivity",
-    "top-5-ai-tools-developers-2026",
-    "quantum-computers-cryptography",
-    "speed-optimization-guide-seo"
-  ],
+  "expand": [],
   "new": [
     {
-      "slug": "android-phone-slow-fix",
-      "keyword": "حل مشكلة بطء هاتف أندرويد وتسريعه بدون برامج",
-      "category": "android"
+      "slug": "whatsapp-not-sending-verification-code",
+      "keyword": "حل مشكلة الواتساب لا يرسل كود التحقق",
+      "category": "software"
     },
     {
-      "slug": "android-battery-drain-fix",
-      "keyword": "حل مشكلة نفاد بطارية أندرويد بسرعة",
-      "category": "android"
-    },
-    {
-      "slug": "android-storage-full-fix",
-      "keyword": "حل مشكلة امتلاء ذاكرة هاتف أندرويد وتحرير المساحة",
-      "category": "android"
-    },
-    {
-      "slug": "google-play-not-downloading-apps",
-      "keyword": "حل مشكلة متجر Google Play لا يحمّل التطبيقات",
-      "category": "android"
-    },
-    {
-      "slug": "windows-blue-screen-fix",
-      "keyword": "حل مشكلة الشاشة الزرقاء في ويندوز",
-      "category": "windows"
-    },
-    {
-      "slug": "laptop-not-charging-fix",
-      "keyword": "حل مشكلة اللابتوب لا يشحن رغم توصيل الشاحن",
-      "category": "windows"
-    },
-    {
-      "slug": "iphone-storage-full-fix",
-      "keyword": "حل مشكلة امتلاء مساحة الآيفون وتنظيف التخزين",
+      "slug": "iphone-unavailable-without-computer",
+      "keyword": "حل مشكلة الآيفون غير متوفر بدون كمبيوتر",
       "category": "iphone"
     },
     {
-      "slug": "iphone-battery-health-tips",
-      "keyword": "الحفاظ على صحة بطارية الآيفون وزيادة عمرها",
-      "category": "iphone"
+      "slug": "recover-stolen-whatsapp-account",
+      "keyword": "طريقة استرجاع حساب واتساب مسروق",
+      "category": "security"
+    },
+    {
+      "slug": "windows-11-black-screen-fix",
+      "keyword": "حل مشكلة الشاشة السوداء في ويندوز 11",
+      "category": "windows"
+    },
+    {
+      "slug": "phone-sos-only-fix",
+      "keyword": "حل مشكلة ظهور SOS على الهاتف وانقطاع الشبكة",
+      "category": "tech"
+    },
+    {
+      "slug": "whatsapp-account-restricted-under-review",
+      "keyword": "حل مشكلة حساب الواتساب مقيد أو قيد المراجعة",
+      "category": "software"
+    },
+    {
+      "slug": "instagram-not-sending-code",
+      "keyword": "حل مشكلة انستقرام لا يرسل الكود ولا يقبل تسجيل الدخول",
+      "category": "software"
     },
     {
       "slug": "iphone-stuck-apple-logo",
-      "keyword": "حل مشكلة توقف الآيفون على شعار أبل",
+      "keyword": "حل مشكلة الآيفون معلق على التفاحة",
       "category": "iphone"
     },
     {
-      "slug": "icloud-backup-guide",
-      "keyword": "طريقة عمل نسخة احتياطية للآيفون على iCloud والكمبيوتر",
-      "category": "iphone"
-    },
-    {
-      "slug": "speed-up-home-internet",
-      "keyword": "طرق تسريع الإنترنت في المنزل فعلياً",
+      "slug": "wifi-connected-no-internet-fix",
+      "keyword": "حل مشكلة الواي فاي متصل ولا يوجد إنترنت",
       "category": "internet"
     },
     {
-      "slug": "change-wifi-password-router",
-      "keyword": "طريقة تغيير باسورد الواي فاي من الراوتر",
-      "category": "internet"
-    },
-    {
-      "slug": "best-router-settings",
-      "keyword": "أفضل إعدادات الراوتر لتحسين سرعة واستقرار الإنترنت",
-      "category": "internet"
-    },
-    {
-      "slug": "wifi-weak-signal-fix",
-      "keyword": "حل مشكلة ضعف إشارة الواي فاي في البيت",
-      "category": "internet"
-    },
-    {
-      "slug": "best-dns-servers",
-      "keyword": "أفضل سيرفرات DNS لتسريع التصفح وطريقة تغييرها",
-      "category": "internet"
-    },
-    {
-      "slug": "know-who-uses-my-wifi",
-      "keyword": "كيف تعرف من يستخدم شبكة الواي فاي الخاصة بك وتحظره",
-      "category": "internet"
-    },
-    {
-      "slug": "protect-whatsapp-from-hacking",
-      "keyword": "حماية واتساب من الاختراق والسرقة",
-      "category": "security"
-    },
-    {
-      "slug": "two-factor-authentication-guide",
-      "keyword": "تفعيل المصادقة الثنائية لحماية حساباتك",
-      "category": "security"
-    },
-    {
-      "slug": "recover-hacked-facebook-account",
-      "keyword": "استرجاع حساب فيسبوك مخترق خطوة بخطوة",
-      "category": "security"
-    },
-    {
-      "slug": "detect-phishing-messages",
-      "keyword": "كيف تكشف رسائل الاحتيال والتصيد الإلكتروني",
-      "category": "security"
-    },
-    {
-      "slug": "strong-password-manager-guide",
-      "keyword": "إنشاء كلمات مرور قوية واستخدام مدير كلمات المرور",
-      "category": "security"
-    },
-    {
-      "slug": "remove-virus-from-pc",
-      "keyword": "إزالة الفيروسات من الكمبيوتر بدون فورمات",
-      "category": "security"
-    },
-    {
-      "slug": "best-free-video-editing-software",
-      "keyword": "أفضل برامج مونتاج الفيديو المجانية",
-      "category": "software"
-    },
-    {
-      "slug": "best-free-pdf-tools",
-      "keyword": "أفضل الأدوات المجانية لتحرير وتحويل ملفات PDF",
-      "category": "software"
-    },
-    {
-      "slug": "transfer-files-phone-to-pc",
-      "keyword": "طرق نقل الملفات من الهاتف إلى الكمبيوتر بدون كابل",
-      "category": "software"
-    },
-    {
-      "slug": "recover-deleted-photos",
-      "keyword": "استرجاع الصور المحذوفة من الهاتف والكمبيوتر",
-      "category": "software"
-    },
-    {
-      "slug": "best-note-taking-apps",
-      "keyword": "أفضل تطبيقات تدوين الملاحظات وتنظيم المهام",
-      "category": "software"
-    },
-    {
-      "slug": "chatgpt-beginners-guide",
-      "keyword": "شرح استخدام ChatGPT للمبتدئين بالعربي",
-      "category": "ai"
-    },
-    {
-      "slug": "best-free-ai-tools",
-      "keyword": "أفضل أدوات الذكاء الاصطناعي المجانية للعمل والدراسة",
-      "category": "ai"
-    },
-    {
-      "slug": "ai-image-generators-guide",
-      "keyword": "أفضل مواقع تحويل النص إلى صور بالذكاء الاصطناعي",
-      "category": "ai"
-    },
-    {
-      "slug": "write-better-ai-prompts",
-      "keyword": "كيف تكتب أوامر Prompts احترافية للذكاء الاصطناعي",
-      "category": "ai"
-    },
-    {
-      "slug": "ai-for-students",
-      "keyword": "استخدام الذكاء الاصطناعي في الدراسة بشكل صحيح",
-      "category": "ai"
-    },
-    {
-      "slug": "gemini-vs-chatgpt",
-      "keyword": "مقارنة بين Gemini وChatGPT: أيهما أفضل لك",
-      "category": "ai"
-    },
-    {
-      "slug": "increase-fps-pc-games",
-      "keyword": "زيادة الفريمات FPS في ألعاب الكمبيوتر",
-      "category": "gaming"
-    },
-    {
-      "slug": "reduce-ping-online-games",
-      "keyword": "تقليل البينج واللاغ في الألعاب الأونلاين",
-      "category": "gaming"
-    },
-    {
-      "slug": "pubg-mobile-lag-fix",
-      "keyword": "حل مشكلة اللاغ والتقطيع في ألعاب الجوال",
-      "category": "gaming"
-    },
-    {
-      "slug": "best-gaming-settings-low-end-pc",
-      "keyword": "تشغيل الألعاب الحديثة على جهاز ضعيف",
-      "category": "gaming"
-    },
-    {
-      "slug": "how-to-choose-laptop",
-      "keyword": "كيف تختار لابتوب مناسب لاحتياجاتك وميزانيتك",
-      "category": "hardware"
-    },
-    {
-      "slug": "ssd-vs-hdd",
-      "keyword": "الفرق بين SSD وHDD وأيهما تختار",
-      "category": "hardware"
-    },
-    {
-      "slug": "how-much-ram-do-i-need",
-      "keyword": "كم رام تحتاج في الكمبيوتر والهاتف",
-      "category": "hardware"
-    },
-    {
-      "slug": "build-gaming-pc-guide",
-      "keyword": "دليل تجميع كمبيوتر ألعاب للمبتدئين",
-      "category": "hardware"
-    },
-    {
-      "slug": "clean-laptop-fan-overheating",
-      "keyword": "حل مشكلة سخونة اللابتوب وتنظيف المروحة",
-      "category": "hardware"
-    },
-    {
-      "slug": "install-windows-11-usb",
-      "keyword": "تثبيت ويندوز 11 من فلاشة USB خطوة بخطوة",
+      "slug": "convert-pdf-to-word",
+      "keyword": "طريقة تحويل ملف PDF إلى Word مجاناً",
       "category": "tutorials"
     },
     {
-      "slug": "screen-record-any-device",
-      "keyword": "طريقة تسجيل الشاشة على الكمبيوتر والهاتف",
-      "category": "tutorials"
+      "slug": "tiktok-no-internet-connection-fix",
+      "keyword": "حل مشكلة تيك توك لا يوجد اتصال بالإنترنت",
+      "category": "software"
     },
     {
-      "slug": "create-gmail-account",
-      "keyword": "إنشاء حساب Gmail جديد وضبط إعداداته",
-      "category": "tutorials"
-    },
-    {
-      "slug": "factory-reset-android-safely",
-      "keyword": "عمل فورمات لهاتف أندرويد بدون فقدان البيانات",
-      "category": "tutorials"
-    },
-    {
-      "slug": "share-internet-from-phone",
-      "keyword": "طريقة مشاركة الإنترنت من الهاتف للكمبيوتر",
-      "category": "tutorials"
-    },
-    {
-      "slug": "what-is-5g",
-      "keyword": "ما هي شبكة 5G وهل تحتاجها فعلاً",
-      "category": "tech"
-    },
-    {
-      "slug": "what-is-cloud-computing",
-      "keyword": "ما هي الحوسبة السحابية وكيف تستفيد منها",
-      "category": "tech"
-    },
-    {
-      "slug": "esim-explained",
-      "keyword": "ما هي شريحة eSIM وطريقة تفعيلها",
-      "category": "tech"
-    },
-    {
-      "slug": "smart-home-devices-guide",
-      "keyword": "دليل أجهزة البيت الذكي للمبتدئين",
-      "category": "tech"
-    },
-    {
-      "slug": "android-phone-overheating",
-      "keyword": "أسباب سخونة هاتف أندرويد وطرق حلها",
+      "slug": "phone-overheating-fix",
+      "keyword": "لماذا يسخن الهاتف وكيف تحل المشكلة",
       "category": "android"
     },
     {
-      "slug": "android-wifi-connected-no-internet",
-      "keyword": "حل مشكلة الواي فاي متصل ولا يوجد إنترنت في أندرويد",
+      "slug": "laptop-not-turning-on-fix",
+      "keyword": "حل مشكلة اللابتوب لا يقلع ولا يعمل عند ضغط زر التشغيل",
+      "category": "hardware"
+    },
+    {
+      "slug": "recover-snapchat-account",
+      "keyword": "طريقة استرجاع حساب سناب شات",
+      "category": "security"
+    },
+    {
+      "slug": "best-free-ai-video-generators",
+      "keyword": "أفضل مواقع عمل فيديو بالذكاء الاصطناعي مجاناً",
+      "category": "ai"
+    },
+    {
+      "slug": "instagram-couldnt-refresh-feed",
+      "keyword": "حل مشكلة انستقرام تعذر تحديث الموجز",
+      "category": "software"
+    },
+    {
+      "slug": "phone-not-charging-fix",
+      "keyword": "حل مشكلة الهاتف لا يشحن",
       "category": "android"
     },
     {
-      "slug": "windows-11-slow-fix",
-      "keyword": "تسريع ويندوز 11 وحل مشكلة البطء خطوة بخطوة",
+      "slug": "windows-11-update-error-fix",
+      "keyword": "حل مشكلة خطأ تحديث ويندوز 11",
       "category": "windows"
     },
     {
-      "slug": "windows-update-stuck-fix",
-      "keyword": "حل مشكلة توقف تحديثات ويندوز وفشل التثبيت",
+      "slug": "facebook-account-disabled-appeal",
+      "keyword": "حل مشكلة تعطيل حساب فيسبوك وطريقة تقديم الطعن",
+      "category": "security"
+    },
+    {
+      "slug": "recover-unsaved-word-excel-file",
+      "keyword": "طريقة استرجاع ملف وورد أو إكسل لم يتم حفظه",
+      "category": "tutorials"
+    },
+    {
+      "slug": "samsung-stuck-on-logo",
+      "keyword": "حل مشكلة هاتف سامسونج معلق على الشعار",
+      "category": "android"
+    },
+    {
+      "slug": "best-free-ai-photo-editors",
+      "keyword": "أفضل برامج الذكاء الاصطناعي لتعديل الصور مجاناً",
+      "category": "ai"
+    },
+    {
+      "slug": "telegram-login-problem",
+      "keyword": "حل مشكلة تسجيل الدخول في تليجرام",
+      "category": "software"
+    },
+    {
+      "slug": "windows-11-bluetooth-not-working",
+      "keyword": "حل مشكلة البلوتوث لا يعمل في ويندوز 11",
       "category": "windows"
     },
     {
-      "slug": "windows-no-sound-fix",
-      "keyword": "حل مشكلة اختفاء الصوت في ويندوز 10 و11",
+      "slug": "youtube-error-400-fix",
+      "keyword": "حل مشكلة يوتيوب خطأ 400",
+      "category": "software"
+    },
+    {
+      "slug": "laptop-screen-flickering-fix",
+      "keyword": "حل مشكلة وميض شاشة اللابتوب",
+      "category": "hardware"
+    },
+    {
+      "slug": "android-system-webview-problem",
+      "keyword": "حل مشكلة Android System WebView",
+      "category": "android"
+    },
+    {
+      "slug": "windows-11-screenshot-screen-record",
+      "keyword": "طريقة تصوير الشاشة وتسجيلها في ويندوز 11",
       "category": "windows"
     },
     {
-      "slug": "windows-100-percent-disk-usage",
-      "keyword": "حل مشكلة استهلاك القرص 100% في ويندوز",
-      "category": "windows"
+      "slug": "recover-deleted-photos-messages",
+      "keyword": "طريقة استرجاع الصور والرسائل المحذوفة من الهاتف",
+      "category": "tutorials"
+    },
+    {
+      "slug": "check-if-phone-is-hacked",
+      "keyword": "كيف تعرف إذا كان هاتفك مخترقاً وكيف تحميه",
+      "category": "security"
     }
   ]
 }
