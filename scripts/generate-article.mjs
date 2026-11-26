@@ -154,7 +154,7 @@ const SYS_AR =
   "أنت كاتب محتوى تقني عربي محترف ومحرر لغوي وخبير SEO. تكتب بعربية فصحى سهلة وواضحة، بجمل قصيرة وخطوات عملية مرقّمة يستطيع أي مستخدم تطبيقها. تذكر أسماء القوائم والإعدادات كما تظهر في الأجهزة (بالعربية مع الاسم الإنجليزي بين قوسين عند الحاجة). لا تخترع إحصاءات أو أرقام إصدارات أو أسماء دراسات. تعيد JSON فقط.";
 
 async function writeArabic(task) {
-  const outline = await chat([
+  const askOutline = () => chat([
     { role: "system", content: SYS_AR },
     {
       role: "user",
@@ -168,7 +168,13 @@ async function writeArabic(task) {
 عدد الأقسام 7 (العناوين بدون ترقيم)، تبدأ بالأسباب أو الأساسيات ثم الحلول/الخطوات العملية ثم النصائح. عدد الأسئلة 4. لا تذكر كلمة SEO أو "الكلمة المفتاحية" في النص.`,
     },
   ]);
-  const sections = (outline.sections || []).slice(0, 8);
+  // أداة الكتابة المجانية تعيد أحياناً مخططاً ناقصاً: نطلبه من جديد قبل أن نتخلى عن المقال.
+  let outline = {}, sections = [];
+  for (let tries = 1; tries <= 5 && sections.length < 5; tries++) {
+    outline = (await askOutline()) || {};
+    sections = (Array.isArray(outline.sections) ? outline.sections : []).filter((x) => x && x.heading).slice(0, 8);
+    if (sections.length < 5) console.warn(`  ⚠ مخطط ناقص (${sections.length} أقسام، الحقول: ${Object.keys(outline).join(",")}) — محاولة ${tries}`);
+  }
   if (sections.length < 5) throw new Error("مخطط ناقص");
   const parts = [clean(outline.intro)];
   for (const sec of sections) {
