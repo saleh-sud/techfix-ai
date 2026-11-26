@@ -86,5 +86,16 @@
     "readTime": "6 دقائق",
     "date": "2026-11-25",
     "hasEn": true
+  },
+  {
+    "slug": "windows-blue-screen-fix",
+    "title": "حل مشكلة الشاشة الزرقاء في ويندوز خطوة بخطوة",
+    "titleEn": "Step‑by‑Step Fix for the Windows Blue Screen",
+    "summary": "كيفية تشخيص وإصلاح الخلل الذي يسبب الشاشة الزرقاء في جهاز ويندوز، مع خطوات عملية ومعلومات تفصيلية لتجنب الأخطاء.",
+    "summaryEn": "Learn how to diagnose and resolve Blue Screen issues on Windows with practical, easy‑to‑follow steps that help avoid common pitfalls.",
+    "category": "windows",
+    "readTime": "6 دقائق",
+    "date": "2026-11-26",
+    "hasEn": true
   }
 ]
