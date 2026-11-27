@@ -152,5 +152,16 @@
     "readTime": "6 دقائق",
     "date": "2026-11-26",
     "hasEn": true
+  },
+  {
+    "slug": "phone-sos-only-fix",
+    "title": "حل مشكلة ظهور SOS على الهاتف وانقطاع الشبكة بخطوات سهلة",
+    "titleEn": "How to Fix SOS on Your Phone and Restore Cellular Service",
+    "summary": "تعرّف إلى أسباب ظهور SOS وانقطاع الشبكة، وجرّب خطوات عملية لفحص الشريحة وإعدادات الهاتف والتغطية، ثم حدّد متى تحتاج إلى التواصل مع شركة الاتصالات.",
+    "summaryEn": "Learn why SOS appears and cellular service drops, try practical SIM, network, coverage, and phone checks, and find out when to contact your carrier.",
+    "category": "tech",
+    "readTime": "7 دقائق",
+    "date": "2026-11-27",
+    "hasEn": true
   }
 ]
