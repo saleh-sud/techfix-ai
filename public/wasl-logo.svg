@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 220" width="100%" height="100%" fill="none">
+  <defs>
+    <!-- Blue Gradients for W and L -->
+    <linearGradient id="waslBlueLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#25B4FF" />
+      <stop offset="50%" stop-color="#087FE5" />
+      <stop offset="100%" stop-color="#055FB5" />
+    </linearGradient>
+    <linearGradient id="waslBlueFold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#044D94" />
+      <stop offset="50%" stop-color="#066AC2" />
+      <stop offset="100%" stop-color="#087FE5" />
+    </linearGradient>
+    
+    <!-- Navy for A -->
+    <linearGradient id="waslNavyA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#094A8F" />
+      <stop offset="70%" stop-color="#073B72" />
+      <stop offset="100%" stop-color="#052850" />
+    </linearGradient>
+
+    <!-- Arrow Gradient -->
+    <linearGradient id="waslArrowGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#085BAA" />
+      <stop offset="40%" stop-color="#087FE5" />
+      <stop offset="100%" stop-color="#28B8FF" />
+    </linearGradient>
+
+    <!-- Silver Metallic Gradients for S -->
+    <linearGradient id="waslSilverTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="25%" stop-color="#E2E5E9" />
+      <stop offset="60%" stop-color="#BFC3C8" />
+      <stop offset="100%" stop-color="#8F96A0" />
+    </linearGradient>
+    <linearGradient id="waslSilverMid" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7B828D" />
+      <stop offset="35%" stop-color="#B3B8BF" />
+      <stop offset="75%" stop-color="#D9DCE0" />
+      <stop offset="100%" stop-color="#EEF0F3" />
+    </linearGradient>
+    <linearGradient id="waslSilverBot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2F4F7" />
+      <stop offset="40%" stop-color="#C5C9CF" />
+      <stop offset="85%" stop-color="#939AA5" />
+      <stop offset="100%" stop-color="#6F7682" />
+    </linearGradient>
+
+    <!-- Drop Shadow Filter for Ribbon Folds -->
+    <filter id="waslSoftShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#073B72" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- Group: WASL Wordmark -->
+  <g id="wordmark" transform="translate(10, 10)">
+    <!-- ===== LETTER W ===== -->
+    <g id="letter-W">
+      <!-- Left Stem -->
+      <path d="M15 15 L52 15 L78 95 L50 95 Z" fill="url(#waslBlueLight)" />
+      <!-- Left Inner Fold -->
+      <path d="M42 15 L66 82 L96 22 L72 22 Z" fill="url(#waslBlueFold)" opacity="0.95" />
+      <!-- Center Stem -->
+      <path d="M72 22 L104 95 L126 95 L106 15 L84 15 Z" fill="url(#waslBlueLight)" />
+      <!-- Center Inner Fold -->
+      <path d="M96 95 L118 35 L144 95 L126 95 Z" fill="url(#waslBlueFold)" opacity="0.9" />
+      <!-- Right Stem -->
+      <path d="M118 35 L138 15 L162 15 L140 95 L116 95 Z" fill="url(#waslBlueLight)" />
+      <!-- Decorative 3D ribbon contour for W -->
+      <path d="M15 15 C 22 28, 48 95, 52 95 C 62 95, 80 40, 88 20 C 96 40, 114 95, 126 95 C 132 95, 156 30, 162 15 L 142 15 L 122 75 L 102 18 L 84 18 L 64 75 L 42 15 Z" fill="url(#waslBlueLight)" filter="url(#waslSoftShadow)" />
+      <!-- W Highlights -->
+      <path d="M20 18 L44 18 L64 78 L58 78 Z" fill="#4AC7FF" opacity="0.4" />
+      <path d="M76 22 L98 22 L120 78 L114 78 Z" fill="#4AC7FF" opacity="0.3" />
+    </g>
+
+    <!-- ===== LETTER A with Rising Arrow ===== -->
+    <g id="letter-A" transform="translate(155, 0)">
+      <!-- Left Navy Leg (Behind Arrow) -->
+      <path d="M45 15 L15 95 L38 95 L58 45 L72 15 Z" fill="url(#waslNavyA)" />
+      <!-- Right Navy Leg -->
+      <path d="M68 15 L110 95 L84 95 L68 55 L58 35 Z" fill="url(#waslNavyA)" />
+      <!-- Deep apex cap -->
+      <path d="M52 15 L72 15 L62 38 Z" fill="#052850" />
+
+      <!-- SWEEPING UPWARD ARROW (The Soul of WASL) -->
+      <!-- Curving Tail that cuts across the A -->
+      <path d="M2 92 C 22 84, 52 64, 88 32 L 80 26 C 48 54, 20 74, 2 82 Z" fill="url(#waslArrowGrad)" />
+      <!-- Main Swoosh Body -->
+      <path d="M10 88 C 36 78, 70 52, 102 24 L 95 19 C 62 46, 30 72, 8 82 Z" fill="url(#waslArrowGrad)" />
+      <!-- Dynamic Arrowhead pointing up-right -->
+      <polygon points="92,10 126,22 108,44 104,32 86,38" fill="url(#waslBlueLight)" filter="url(#waslSoftShadow)" />
+      <!-- Arrowhead highlight -->
+      <polygon points="94,13 122,23 107,31" fill="#75D8FF" />
+    </g>
+
+    <!-- ===== LETTER S (Sculpted Metallic Silver Ribbon) ===== -->
+    <g id="letter-S" transform="translate(285, 0)">
+      <!-- Upper Loop Silver -->
+      <path d="M76 28 C 76 16, 58 12, 42 12 C 24 12, 10 20, 10 34 C 10 50, 30 56, 52 62 C 72 68, 86 76, 86 92 C 86 112, 64 120, 38 120 C 18 120, 4 110, 4 94 L 24 94 C 24 102, 32 106, 42 106 C 56 106, 64 98, 64 88 C 64 74, 46 68, 26 62 C 10 56, -2 46, -2 28 C -2 10, 18 0, 42 0 C 68 0, 88 12, 94 30 Z" transform="scale(0.8) translate(8, 14)" fill="url(#waslSilverTop)" />
+      <!-- Realistic 3D Ribbon Volumetric overlay -->
+      <path d="M34 16 C 54 16, 74 20, 74 34 C 74 46, 58 54, 38 60 C 22 65, 14 74, 14 84 C 14 96, 26 102, 44 102 C 58 102, 68 96, 72 88 L 86 94 C 80 108, 64 116, 42 116 C 18 116, -2 104, -2 82 C -2 64, 14 54, 32 48 C 50 42, 58 36, 58 28 C 58 22, 50 18, 38 18 C 24 18, 16 24, 14 32 L -2 26 C 2 12, 16 2, 38 2 Z" transform="scale(0.8) translate(14, 10)" fill="url(#waslSilverMid)" opacity="0.95" filter="url(#waslSoftShadow)" />
+      <!-- Metallic Satin Edge Highlight -->
+      <path d="M40 18 C 52 18, 62 22, 62 28 C 62 34, 54 38, 42 42 C 34 44, 28 47, 24 50 C 22 47, 24 40, 30 32 C 34 26, 38 22, 40 18 Z" fill="#FFFFFF" opacity="0.6" transform="scale(0.8) translate(14, 10)" />
+      <!-- Lower Shadow curve -->
+      <path d="M26 78 C 34 82, 46 84, 52 88 C 58 92, 58 96, 54 100 C 46 102, 36 102, 28 98 C 24 94, 24 86, 26 78 Z" fill="url(#waslSilverBot)" transform="scale(0.8) translate(14, 10)" />
+    </g>
+
+    <!-- ===== LETTER L (Vibrant Royal Blue Ribbon) ===== -->
+    <g id="letter-L" transform="translate(390, 0)">
+      <!-- Vertical Stem -->
+      <path d="M12 15 L36 15 C 36 40, 36 68, 36 78 C 36 86, 42 90, 52 90 L 98 90 C 104 90, 106 95, 102 98 L 92 108 L 34 108 C 14 108, 12 92, 12 76 Z" fill="url(#waslBlueLight)" filter="url(#waslSoftShadow)" />
+      <!-- Outer Curve Ribbon Fold -->
+      <path d="M36 42 L 36 82 C 36 94, 48 98, 64 98 L 102 98 L 92 108 L 44 108 C 22 108, 18 96, 18 78 L 18 42 Z" fill="url(#waslBlueFold)" opacity="0.9" />
+      <!-- Shiny Stem Highlight -->
+      <path d="M16 18 L 26 18 L 26 76 C 26 84, 28 88, 34 90 L 22 92 C 16 88, 16 82, 16 76 Z" fill="#54D0FF" opacity="0.5" />
+    </g>
+  </g>
+
+  <!-- ===== HORIZONTAL DIVIDER & ARABIC SLOGAN ===== -->
+  <g id="slogan-section" transform="translate(0, 135)">
+    <!-- Left Silver Divider Line -->
+    <line x1="45" y1="26" x2="165" y2="26" stroke="url(#waslSilverTop)" stroke-width="2.5" stroke-linecap="round" />
+    
+    <!-- Arabic Slogan: بينك وبين فرصتك -->
+    <!-- Authentic, bold, high-contrast Arabic Typography matching Cairo / Tajawal bold -->
+    <text x="270" y="36" text-anchor="middle" font-family="'Cairo', 'Tajawal', system-ui, sans-serif" font-weight="800" font-size="29" fill="#087FE5" letter-spacing="0.5">
+      بينك وبين فرصتك
+    </text>
+
+    <!-- Right Silver Divider Line -->
+    <line x1="375" y1="26" x2="495" y2="26" stroke="url(#waslSilverTop)" stroke-width="2.5" stroke-linecap="round" />
+  </g>
+</svg>

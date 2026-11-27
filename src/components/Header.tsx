@@ -55,7 +55,11 @@ export default function Header({ isDarkMode, onThemeToggle }: { isDarkMode: bool
   return (
     <header className="sticky top-0 z-50 w-full bg-white dark:bg-slate-950 border-b border-gray-200 dark:border-slate-800">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
-        <Link to={to("/")} className="flex items-center gap-2 shrink-0 font-black" aria-label={t("TechFix AI الرئيسية", "TechFix AI home")}>
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <a href="https://wasl-jobs.com/" aria-label="WASL" className="hidden sm:block shrink-0 border-e border-slate-200 dark:border-slate-700 pe-2 sm:pe-3 bg-transparent">
+            <img src="/wasl-logo.svg" alt="WASL" width="79" height="32" className="h-7 sm:h-8 w-auto dark:bg-white dark:rounded-md" />
+          </a>
+          <Link to={to("/")} className="flex items-center gap-2 shrink-0 font-black" aria-label={t("TechFix AI الرئيسية", "TechFix AI home")}>
           <span className="p-2 bg-gradient-to-tr from-brand-blue to-brand-cyan text-white rounded-xl shadow-md">
             <Sparkles className="w-5 h-5 text-amber-300" />
           </span>
@@ -63,6 +67,7 @@ export default function Header({ isDarkMode, onThemeToggle }: { isDarkMode: bool
             TechFix <span className="text-brand-cyan">AI</span>
           </span>
         </Link>
+        </div>
 
         <nav className="hidden lg:flex items-center gap-1" aria-label={t("القائمة الرئيسية", "Main menu")}>
           {NAV.map((l) => (
