@@ -179,3 +179,6 @@ html.dark { background: #020617; color-scheme: dark; }
   --color-brand-blue: #073b72;
   --color-brand-accent: #087fe5;
 }
+
+/* Speed: skip layout of off-screen blocks until they are scrolled to. */
+footer, article { content-visibility: auto; contain-intrinsic-size: auto 400px; }
