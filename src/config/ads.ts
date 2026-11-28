@@ -42,11 +42,11 @@ export const ADS_CONFIG: Record<AdNetworkId, AdNetworkConfig> = {
     enabled: true,
     slots: {
       top: "",
-      // CV_Banner_300x100 (zone 7665389, site wasl-jobs.com), shared with cv.wasl-jobs.com
-      mobile: hilltop("https://prizefamily.com/bLXgVYs.d/Gsl/0MYDWocP/leBmc9-uHZtUBl/kHPBT/cQ2yNqjXU/zKOKDeketANszhYk2xNDTdMe5IM/wj"),
+      // 300x100 zone 7669873, site techfix.wasl-jobs.com
+      mobile: hilltop("https://prizefamily.com/b.XPVgsHdeGdlr0oY/W/cM/gelmN9fuUZ/Ujl/kZP/T/cp2JN_jrkg4DN-zJMTtmNfzvYM2NONT_gE3INowj"),
       content: "",
-      // Tools_Banner_300x250 (zone 7664793, site wasl-jobs.com), shared with tools and cv
-      sidebar: hilltop("https://prizefamily.com/bcXHVMstd.GTlF0xY/Wqcf/ce-mj9zuRZvUvlMkbP/TTcW2pNZj_Qf3QOtT/MPtQNKzNYX2hNBDmcN5nNOwc"),
+      // 300x250 zone 7669813, site techfix.wasl-jobs.com
+      sidebar: hilltop("https://prizefamily.com/b.XMV/sbddG_l/0OYUWyce/Ue_mp9lu/ZQUPlzk/PTTEcf2dNpjekx4cM/ToMFtCNIzJY/2/OLTwgLxvNEww"),
       native: "",
     },
     // Popunder / In-Page Push / Video Slider removed (not allowed next to Google AdSense).
