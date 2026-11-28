@@ -32,9 +32,9 @@ export const hilltop = (src: string) =>
 export const aadsUnit = (id: string) =>
   `<iframe data-aa='${id}' src='https://acceptable.a-ads.com/${id}/?size=Adaptive' style='border:0;padding:0;width:100%;height:100%;overflow:hidden;display:block;margin:auto'></iframe>`;
 
-/** A-ADS: وحدة للكمبيوتر (#2462899) ووحدة للجوال (#2462900) — Adaptive، بدون NSFW/قمار/مشاريع خطرة. */
-const AADS_DESKTOP = aadsUnit("2462899");
-const AADS_MOBILE = aadsUnit("2462900");
+/** A-ADS: وحدة للكمبيوتر (#2463566) ووحدة للجوال (#2463567) — Adaptive، المحجوب NSFW فقط. */
+const AADS_DESKTOP = aadsUnit("2463566");
+const AADS_MOBILE = aadsUnit("2463567");
 
 export const ADS_CONFIG: Record<AdNetworkId, AdNetworkConfig> = {
   hilltopads: {
