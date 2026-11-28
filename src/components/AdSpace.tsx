@@ -1,4 +1,4 @@
-import { AD_NETWORK_ORDER, ADS_CONFIG, AdSlotName } from "../config/ads";
+import { AD_NETWORK_ORDER, ADS_CONFIG, AdNetworkId, AdSlotName } from "../config/ads";
 import { useInteracted } from "../lib/interaction";
 import { useLang } from "../lib/lang";
 
@@ -18,12 +18,12 @@ const srcDoc = (code: string) =>
   `<!doctype html><html><head><meta charset="utf-8"><base target="_blank"><style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:transparent;text-align:center}</style></head><body>${code}</body></html>`;
 
 /** مكان إعلان واحد: يحجز المساحة مسبقاً (بدون اهتزاز للصفحة) ويحمّل الإعلانات بعد أول تفاعل. */
-function Slot({ type, className = "" }: { type: AdSlotName; className?: string }) {
+function Slot({ type, className = "", only }: { type: AdSlotName; className?: string; only?: AdNetworkId }) {
   const ready = useInteracted();
   const { t } = useLang();
   const { w, h } = SIZE[type];
   const fluid = type === "native";
-  const ids = AD_NETWORK_ORDER.filter((id) => ADS_CONFIG[id].enabled && ADS_CONFIG[id].slots[type].trim());
+  const ids = AD_NETWORK_ORDER.filter((id) => (!only || id === only) && ADS_CONFIG[id].enabled && ADS_CONFIG[id].slots[type].trim());
   if (!ids.length) return null;
   return (
     <div className={`my-4 flex-col items-center gap-3 ${className}`} aria-label={t("إعلان", "Advertisement")} role="complementary">
@@ -61,4 +61,9 @@ export default function AdSpace({ type }: AdSpaceProps) {
       </>
     );
   return <Slot type={type} className="flex" />;
+}
+
+/** HilltopAds banner on every page (A-ADS is already static in index.html). Hidden when printing. */
+export function SiteAd() {
+  return <Slot type="sidebar" only="hilltopads" className="flex print:hidden" />;
 }

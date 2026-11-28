@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GlobalAds from "./components/GlobalAds";
+import { SiteAd } from "./components/AdSpace";
 import CookieConsent from "./components/CookieConsent";
 import { useLang } from "./lib/lang";
 import HomeView from "./views/HomeView";
@@ -61,6 +62,7 @@ export default function App() {
           <Route path="*" element={<NotFoundView />} />
         </Routes>
       </main>
+      <SiteAd />
       <Footer />
       <GlobalAds />
       <CookieConsent />
